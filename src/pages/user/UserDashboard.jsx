@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 
-import PortalShell from '../../components/PortalShell';
+import PortalShell from '../../components/PortalShell/PortalShell.jsx';
 
-import AccountSettings from '../../components/AccountSettings';
+import AccountSettings from '../../components/AccountSettings/AccountSettings.jsx';
 
-import CategoryManager from '../../components/CategoryManager';
+import CategoryManager from '../../components/CategoryManager/CategoryManager.jsx';
 
-import StatsCard from '../../components/StatsCard';
-import ExpenseForm from '../../components/ExpenseForm';
-import ExpenseList from '../../components/ExpenseList';
-import CategoryList from '../../components/CategoryList';
+import Stats from '../../components/Stats/Stats.jsx';
+import StatsCard from '../../components/Stats/StatsCard.jsx';
+import ExpenseForm from '../../components/Expense/ExpenseForm/ExpenseForm.jsx';
+import ExpenseList from '../../components/Expense/ExpenseList/ExpenseList.jsx';
+import CategoryList from '../../components/CategoryManager/CategoryList/CategoryList.jsx';
 
 import { useExpenses } from '../../hooks/useExpenses';
 import { useCategories } from '../../hooks/useCategories';
 import { useSummary } from '../../hooks/useSummary';
-import Stats from '../../components/Stats';
 
 import { formatCurrency } from '../../utils/format';
 
@@ -27,7 +27,7 @@ export default function UserDashboard({ auth }) {
 
   const [expenseForm, setExpenseForm] = useState({
     amount: '',
-    category: 'Groceries',
+    category_id: '',
     description: '',
     date: new Date().toISOString().split('T')[0],
   });
@@ -39,13 +39,18 @@ export default function UserDashboard({ auth }) {
   });
   const [editingCategoryId, setEditingCategoryId] = useState(null);
 
-  const { expenses, saveExpense, deleteExpense, loadExpenses } = useExpenses(auth.user.username);
+  const { expenses, saveExpense, deleteExpense, loadExpenses } = useExpenses(auth.user.id);
+  //const { expenses, saveExpense, deleteExpense, loadExpenses } = useExpenses();
 
-  const { categories, loadCategories, addCategory, saveCategory, removeCategory } = useCategories(
-    auth.user.username
-  );
+  // const { categories, loadCategories, addCategory, saveCategory, removeCategory } = useCategories(
+  //   auth.user.id
+  // );
 
-  const { summary, loadSummary } = useSummary(auth.user.username);
+  const { categories, loadCategories, addCategory, saveCategory, removeCategory } = useCategories();
+
+  const { summary, loadSummary } = useSummary(auth.user.id);
+
+  //    const { summary, loadSummary } = useSummary();
 
   const { accountView } = auth;
 
@@ -54,6 +59,15 @@ export default function UserDashboard({ auth }) {
     loadCategories();
     loadSummary();
   }, []);
+
+  useEffect(() => {
+    if (categories.length > 0 && !expenseForm.category_id) {
+      setExpenseForm((prev) => ({
+        ...prev,
+        category_id: categories[0].id,
+      }));
+    }
+  }, [categories]);
 
   if (accountView) {
     return <AccountSettings auth={auth} />;
@@ -126,14 +140,7 @@ export default function UserDashboard({ auth }) {
 
       onNavigate={setActiveTab}
     >
-      {activeTab === 'dashboard' && summary && (
-
-  <Stats
-    summary={summary}
-    categories={categories}
-  />
-
-)}
+      {activeTab === 'dashboard' && summary && <Stats summary={summary} categories={categories} />}
 
       {activeTab === 'entries' && (
         <>
@@ -148,18 +155,27 @@ export default function UserDashboard({ auth }) {
 
             categories={categories}
 
-            addExpense={(event) => {
-              saveExpense(
+            addExpense={async (event) => {
+              await saveExpense(
                 event,
 
                 expenseForm,
 
                 null
               );
+
+              await loadSummary();
+
+              setExpenseForm({
+                amount: '',
+                category_id: categories[0]?.id || '',
+                description: '',
+                date: new Date().toISOString().split('T')[0],
+              });
             }}
 
-            saveExpense={(event) => {
-              saveExpense(
+            saveExpense={async (event) => {
+              await saveExpense(
                 event,
 
                 expenseForm,
@@ -167,12 +183,14 @@ export default function UserDashboard({ auth }) {
                 editingExpenseId
               );
 
+              await loadSummary();
+
               setEditingExpenseId(null);
 
               setExpenseForm({
                 amount: '',
 
-                category: categories[0]?.name || '',
+                category_id: categories[0]?.id || '',
 
                 description: '',
 
@@ -184,7 +202,10 @@ export default function UserDashboard({ auth }) {
           <ExpenseList
             expenses={filteredExpenses}
 
-            onDelete={deleteExpense}
+            onDelete={async (id) => {
+              await deleteExpense(id);
+              await loadSummary();
+            }}
 
             onEdit={(expense) => {
               setEditingExpenseId(expense.id);
@@ -192,7 +213,7 @@ export default function UserDashboard({ auth }) {
               setExpenseForm({
                 amount: expense.amount,
 
-                category: expense.category,
+                category_id: expense.category_id,
 
                 description: expense.description,
 

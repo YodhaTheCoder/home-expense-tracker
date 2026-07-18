@@ -1,18 +1,20 @@
+import './UserForm.css';
+
 function UserForm({ form, setForm, onSubmit, editing }) {
   return (
-    <form onSubmit={onSubmit}>
+    <form className="user-form" onSubmit={onSubmit}>
       <div className="field">
-        <label>Username</label>
+        <label>Email</label>
 
         <input
-          value={form.username}
+          value={form.email}
 
           disabled={editing}
 
           onChange={(e) =>
             setForm({
               ...form,
-              username: e.target.value,
+              email: e.target.value,
             })
           }
         />

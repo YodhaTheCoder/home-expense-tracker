@@ -1,3 +1,7 @@
+import { useState } from 'react'
+
+import './ExpenseForm.css';
+
 function ExpenseForm({
   expenseForm,
   setExpenseForm,
@@ -10,12 +14,18 @@ function ExpenseForm({
 
   categories,
 }) {
+
+  const [categoryText, setCategoryText] = useState(
+  categories.find((category) => category.name === 'Groceries')?.name || ''
+);
+
+
   function resetForm() {
     setEditingExpenseId(null);
 
     setExpenseForm({
       amount: '',
-      category: categories[0]?.name || '',
+      category_id: categories.find((category) => category.name === 'Groceries')?.id || '',
       description: '',
       date: new Date().toISOString().split('T')[0],
     });
@@ -23,9 +33,9 @@ function ExpenseForm({
 
   return (
     <div className="card">
-      <h3 style={{ marginTop: 0 }}>{editingExpenseId ? 'Edit Expense' : 'Add Expense'}</h3>
+      <h3 className="form-title">{editingExpenseId ? 'Edit Expense' : 'Add Expense'}</h3>
 
-      <form  className="expense-form" onSubmit={editingExpenseId ? saveExpense : addExpense}>
+      <form className="expense-form" onSubmit={editingExpenseId ? saveExpense : addExpense}>
         <div className="form-row">
           <div className="field">
             <label>Amount</label>
@@ -46,26 +56,36 @@ function ExpenseForm({
             />
           </div>
 
-          <div className="field">
-            <label>Category</label>
+         <div className="field">
+  <label>Category</label>
 
-            <select
-              value={expenseForm.category}
+  <input
+    list="category-options"
+    value={categoryText}
+    onChange={(e) => {
+      const value = e.target.value;
 
-              onChange={(e) =>
-                setExpenseForm({
-                  ...expenseForm,
-                  category: e.target.value,
-                })
-              }
-            >
-              {categories.map((category) => (
-                <option key={category.id} value={category.name}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </div>
+      setCategoryText(value);
+
+      const selectedCategory = categories.find(
+        (category) => category.name === value
+      );
+
+      setExpenseForm({
+        ...expenseForm,
+        category_id: selectedCategory ? selectedCategory.id : '',
+      });
+    }}
+    placeholder="Type or select category"
+    required
+  />
+
+  <datalist id="category-options">
+    {categories.map((category) => (
+      <option key={category.id} value={category.name} />
+    ))}
+  </datalist>
+</div>
 
           <div className="field">
             <label>Date</label>

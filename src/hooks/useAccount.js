@@ -1,153 +1,125 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 
-import { updateProfile, changePassword } from '../services/accountService';
+// import { updateProfile, changePassword } from '../services/accountService';
 
+// export function useAccount(user, setUser) {
 
-export function useAccount(user, setUser) {
+//   const [accountView, setAccountView] = useState(null);
 
-  const [accountView, setAccountView] = useState(null);
+//   const [profileForm, setProfileForm] = useState({
+//     full_name: user?.fullname || '',
+//   });
 
+//   const [passwordForm, setPasswordForm] = useState({
+//     currentPassword: '',
+//     newPassword: '',
+//     confirmPassword: '',
+//   });
 
-  const [profileForm, setProfileForm] = useState({
-    full_name: user?.fullname || '',
-  });
+//   const [message, setMessage] = useState('');
 
+//   async function saveProfile(event) {
 
-  const [passwordForm, setPasswordForm] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: '',
-  });
+//     event.preventDefault();
 
+//     try {
 
-  const [message, setMessage] = useState('');
+//       const name = profileForm.full_name || profileForm.fullname;
 
+//       const updatedUser = await updateProfile(
+//         user.username,
+//         name
+//       );
 
+//        const newUser = {
+//             ...user,
+//             fullname: updatedUser.fullname || updatedUser.full_name,
+//         };
 
-  async function saveProfile(event) {
+//       setUser(newUser);
 
-    event.preventDefault();
+//       setProfileForm({
+//         full_name: updatedUser.full_name || updatedUser.fullname || ""
+//       });
 
+//       setMessage('Profile updated.');
 
-    try {
+//       setAccountView(null);
 
-      const name = profileForm.full_name || profileForm.fullname;
- 
-      const updatedUser = await updateProfile(
-        user.username,
-        name
-      );
+//     } catch(error) {
 
-  
-       const newUser = {
-            ...user,
-            fullname: updatedUser.fullname || updatedUser.full_name,
-        };
+//       setMessage(error.message);
 
+//     }
 
-      setUser(newUser);
+//   }
 
+//   async function savePassword(event) {
 
-      setProfileForm({
-        full_name: updatedUser.full_name || updatedUser.fullname || ""
-      });
+//     event.preventDefault();
 
+//     if(passwordForm.newPassword !== passwordForm.confirmPassword){
 
-      setMessage('Profile updated.');
+//       setMessage('Passwords do not match.');
 
-      setAccountView(null);
+//       return;
 
+//     }
 
-    } catch(error) {
+//     try {
 
-      setMessage(error.message);
+//       await changePassword(
+//         user.username,
+//         passwordForm.currentPassword,
+//         passwordForm.newPassword
+//       );
 
-    }
+//       setMessage('Password updated.');
 
-  }
+//       setPasswordForm({
+//         currentPassword:'',
+//         newPassword:'',
+//         confirmPassword:''
+//       });
 
+//       setAccountView(null);
 
+//     } catch(error){
 
+//       setMessage(error.message);
 
-  async function savePassword(event) {
+//     }
 
-    event.preventDefault();
+//   }
 
+//   useEffect(()=>{
 
-    if(passwordForm.newPassword !== passwordForm.confirmPassword){
+//     if(user){
 
-      setMessage('Passwords do not match.');
+//       setProfileForm({
+//         full_name: user.fullname || ""
+//       });
 
-      return;
+//     }
 
-    }
+//   },[user]);
 
+//   return {
 
-    try {
+//     accountView,
+//     setAccountView,
 
-      await changePassword(
-        user.username,
-        passwordForm.currentPassword,
-        passwordForm.newPassword
-      );
+//     profileForm,
+//     setProfileForm,
 
+//     passwordForm,
+//     setPasswordForm,
 
-      setMessage('Password updated.');
+//     saveProfile,
+//     savePassword,
 
+//     message
 
-      setPasswordForm({
-        currentPassword:'',
-        newPassword:'',
-        confirmPassword:''
-      });
+//   };
 
-
-      setAccountView(null);
-
-
-    } catch(error){
-
-      setMessage(error.message);
-
-    }
-
-  }
-
-
-
-
-
-  useEffect(()=>{
-
-    if(user){
-
-      setProfileForm({
-        full_name: user.fullname || ""
-      });
-
-    }
-
-  },[user]);
-
-
-
-
-  return {
-
-    accountView,
-    setAccountView,
-
-    profileForm,
-    setProfileForm,
-
-    passwordForm,
-    setPasswordForm,
-
-    saveProfile,
-    savePassword,
-
-    message
-
-  };
-
-}
+// }

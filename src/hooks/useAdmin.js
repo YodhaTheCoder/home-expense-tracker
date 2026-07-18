@@ -16,7 +16,7 @@ import {
 
 import { getSummary } from '../services/summaryService';
 
-export function useAdmin(user) {
+export function useAdmin(user, profile) {
   const [users, setUsers] = useState([]);
 
   const [categories, setCategories] = useState([]);
@@ -27,36 +27,36 @@ export function useAdmin(user) {
 
   const [message, setMessage] = useState('');
 
-  // category states
-
   const [categoryForm, setCategoryForm] = useState({
     name: '',
   });
 
   const [editingCategoryId, setEditingCategoryId] = useState(null);
 
-  // user states
-
   const [userForm, setUserForm] = useState({
-    username: '',
+    email: '',
+
     password: '',
+
     full_name: '',
+
     role: 'user',
   });
 
-  const [editingUserName, setEditingUserName] = useState(null);
+  const [editingUserId, setEditingUserId] = useState(null);
 
-  async function loadAdminData() {
+  async function loadAdminData(filters = {}) {
     if (!user) {
       return;
     }
+
     try {
       const [usersData, categoriesData, summaryData] = await Promise.all([
         getUsers(),
 
         getCategories(),
 
-        getSummary(),
+        getSummary(null, filters),
       ]);
 
       setUsers(usersData);
@@ -70,18 +70,16 @@ export function useAdmin(user) {
   }
 
   useEffect(() => {
-    if (user && user.role === 'admin') {
+    if (user && ['super_admin', 'admin'].includes(profile?.role)) {
       loadAdminData();
     }
-  }, [user]);
+  }, [user, profile]);
 
   async function addCategory(event) {
     event.preventDefault();
 
     try {
       await createCategory({
-        created_by: user.username,
-
         name: categoryForm.name,
       });
 
@@ -112,8 +110,6 @@ export function useAdmin(user) {
       await updateCategory(
         editingCategoryId,
 
-        user.username,
-
         {
           name: categoryForm.name,
         }
@@ -135,11 +131,7 @@ export function useAdmin(user) {
 
   async function removeCategory(id) {
     try {
-      await deleteCategory(
-        id,
-
-        user.username
-      );
+      await deleteCategory(id);
 
       setMessage('Category removed.');
 
@@ -156,7 +148,7 @@ export function useAdmin(user) {
       await createUserApi(userForm);
 
       setUserForm({
-        username: '',
+        email: '',
         password: '',
         full_name: '',
         role: 'user',
@@ -171,10 +163,10 @@ export function useAdmin(user) {
   }
 
   function editUser(item) {
-    setEditingUserName(item.username);
+    setEditingUserId(item.id);
 
     setUserForm({
-      username: item.username,
+      email: item.email || '',
 
       password: '',
 
@@ -189,15 +181,19 @@ export function useAdmin(user) {
 
     try {
       await updateUser(
-        editingUserName,
+        editingUserId,
 
-        userForm
+        {
+          full_name: userForm.full_name,
+
+          role: userForm.role,
+        }
       );
 
-      setEditingUserName(null);
+      setEditingUserId(null);
 
       setUserForm({
-        username: '',
+        email: '',
         password: '',
         full_name: '',
         role: 'user',
@@ -211,9 +207,9 @@ export function useAdmin(user) {
     }
   }
 
-  async function deleteUser(username) {
+  async function deleteUser(id) {
     try {
-      await deleteUserApi(username);
+      await deleteUserApi(id);
 
       setMessage('User deleted.');
 
@@ -248,9 +244,9 @@ export function useAdmin(user) {
 
     setUserForm,
 
-    editingUserName,
+    editingUserId,
 
-    setEditingUserName,
+    setEditingUserId,
 
     loadAdminData,
 

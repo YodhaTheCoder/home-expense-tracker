@@ -1,0 +1,29 @@
+.expense-form {
+  width: 100%;
+}
+
+.form-title {
+  margin-top: 0;
+}
+
+.form-row {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .expense-form .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .expense-form .inline-actions {
+    flex-direction: column;
+  }
+
+  .expense-form .inline-actions button {
+    width: 100%;
+  }
+}

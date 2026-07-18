@@ -1,0 +1,65 @@
+.settings-container {
+  max-width: 640px;
+
+  margin: auto;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.settings-header {
+  padding: 22px;
+}
+
+.profile-top {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+}
+
+.profile-top h2 {
+  margin: 0 0 5px;
+}
+
+.settings-message {
+  padding: 14px;
+}
+
+.settings-form {
+  padding: 24px;
+}
+
+.settings-actions {
+  display: flex;
+
+  gap: 12px;
+
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .settings-container {
+    width: 100%;
+  }
+
+  .settings-form {
+    padding: 16px;
+  }
+
+  .profile-top {
+    align-items: flex-start;
+  }
+
+  .settings-actions {
+    flex-direction: column;
+  }
+
+  .settings-actions button {
+    width: 100%;
+  }
+}

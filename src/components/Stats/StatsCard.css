@@ -1,0 +1,37 @@
+.stat {
+  background: white;
+
+  border-radius: 16px;
+
+  padding: 20px;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+
+  border: 1px solid #e5e7eb;
+}
+
+.stat .label {
+  color: #64748b;
+
+  font-size: 14px;
+
+  margin-bottom: 8px;
+}
+
+.stat .value {
+  font-size: 28px;
+
+  font-weight: 700;
+
+  color: #111827;
+}
+
+@media (max-width: 600px) {
+  .stat {
+    padding: 16px;
+  }
+
+  .stat .value {
+    font-size: 24px;
+  }
+}

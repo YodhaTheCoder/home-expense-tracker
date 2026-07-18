@@ -1,0 +1,42 @@
+.user-form-card {
+  margin-bottom: 24px;
+}
+
+.user-list-card {
+  margin-top: 24px;
+}
+
+.user-card {
+  position: relative;
+}
+
+.user-card .category-actions {
+  margin-top: 20px;
+}
+
+.user-icon {
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+}
+
+.username-text {
+  margin: 0 0 8px;
+
+  font-size: 13px;
+}
+.default-type {
+  background: #ede9fe;
+
+  color: #6d28d9;
+}
+
+.custom-type {
+  background: #dcfce7;
+
+  color: #15803d;
+}
+
+@media (max-width: 600px) {
+  .user-card {
+    width: 100%;
+  }
+}

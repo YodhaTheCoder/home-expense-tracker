@@ -7,14 +7,14 @@ import {
   removeExpense,
 } from '../services/expenseService';
 
-export function useExpenses(username) {
+export function useExpenses() {
   const [expenses, setExpenses] = useState([]);
 
   const [message, setMessage] = useState('');
 
   async function loadExpenses() {
     try {
-      const data = await getExpenses(username);
+      const data = await getExpenses();
 
       setExpenses(data);
     } catch (error) {
@@ -26,53 +26,40 @@ export function useExpenses(username) {
     event.preventDefault();
 
     try {
+      const payload = {
+        amount: Number(expenseForm.amount),
+
+        category_id: Number(expenseForm.category_id),
+
+        description: expenseForm.description,
+
+        date: expenseForm.date,
+      };
+
       if (editingExpenseId) {
         await updateExpense(
           editingExpenseId,
 
-          username,
-
-          {
-            amount: Number(expenseForm.amount),
-
-            category: expenseForm.category,
-
-            description: expenseForm.description,
-
-            date: expenseForm.date,
-          }
+          payload
         );
 
         setMessage('Expense updated.');
       } else {
-        await createExpense({
-          username,
-
-          amount: Number(expenseForm.amount),
-
-          category: expenseForm.category,
-
-          description: expenseForm.description,
-
-          date: expenseForm.date,
-        });
+        await createExpense(payload);
 
         setMessage('Expense added.');
       }
 
       await loadExpenses();
     } catch (error) {
+      
       setMessage(error.message);
     }
   }
 
   async function deleteExpense(id) {
     try {
-      await removeExpense(
-        id,
-
-        username
-      );
+      await removeExpense(id);
 
       setMessage('Expense deleted.');
 

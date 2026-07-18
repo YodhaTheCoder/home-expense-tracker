@@ -1,7 +1,7 @@
 import React from 'react';
+import './AccountSettings.css';
 
 function AccountSettings({ auth }) {
-
   const {
     accountView,
     message,
@@ -16,290 +16,132 @@ function AccountSettings({ auth }) {
     setShowMenu,
   } = auth;
 
-
-
   const backToPortal = () => {
-
     setAccountView(null);
     setShowMenu(false);
-
   };
 
-
-
   return (
-
     <div className="settings-container">
-
-
       <div className="card settings-header">
-
-
         <div className="profile-top">
-
-
           <div className="category-icon user-icon">
-
-            {(user.fullname || user.username)
-              .charAt(0)
-              .toUpperCase()
-            }
-
+            {(user.email || user.full_name).charAt(0).toUpperCase()}
           </div>
-
-
 
           <div>
+            <h2>{accountView === 'profile' ? 'Profile Settings' : 'Password Settings'}</h2>
 
-            <h2>
-              {
-                accountView === 'profile'
-                ? 'Profile Settings'
-                : 'Password Settings'
-              }
-            </h2>
-
-
-            <p className="muted">
-              Manage your account information and security
-            </p>
-
+            <p className="muted">Manage your account information and security</p>
           </div>
-
-
         </div>
-
-
       </div>
 
-
-
-
-
-      {message && (
-
-        <div className="card settings-message">
-
-          {message}
-
-        </div>
-
-      )}
-
-
-
+      {message && <div className="card settings-message">{message}</div>}
 
       <div className="card settings-form">
-
-
         {accountView === 'profile' ? (
-
-
           <form onSubmit={saveProfile}>
-
-
             <div className="field">
-
-              <label>
-                Display Name
-              </label>
-
+              <label>Display Name</label>
 
               <input
+                value={profileForm.full_name || ''}
 
-                value={
-                  profileForm.full_name ||
-                  profileForm.fullname ||
-                  ""
-                }
-
-
-                onChange={(e)=>
-                  setProfileForm(prev=>({
+                onChange={(e) =>
+                  setProfileForm((prev) => ({
                     ...prev,
-                    full_name:e.target.value,
+                    full_name: e.target.value,
                   }))
                 }
 
-
-                placeholder={user.fullname}
-
+                placeholder={user.email}
               />
-
-
             </div>
 
-
-
             <div className="settings-actions">
-
-
-              <button
-                className="category-btn edit"
-                type="submit"
-              >
+              <button className="category-btn edit" type="submit">
                 Save Profile
               </button>
 
-
-
-              <button
-                className="category-btn delete"
-                type="button"
-                onClick={backToPortal}
-              >
+              <button className="category-btn delete" type="button" onClick={backToPortal}>
                 Back
               </button>
-
-
             </div>
-
-
-
           </form>
-
-
-
         ) : (
-
-
           <form onSubmit={savePassword}>
-
-
             <div className="field">
-
-              <label>
-                Current Password
-              </label>
-
+              <label>Current Password</label>
 
               <input
-
                 type="password"
 
                 value={passwordForm.currentPassword}
 
-
-                onChange={(e)=>
+                onChange={(e) =>
                   setPasswordForm({
                     ...passwordForm,
-                    currentPassword:e.target.value,
+                    currentPassword: e.target.value,
                   })
                 }
 
-
                 required
-
               />
-
             </div>
 
-
-
-
             <div className="field">
-
-              <label>
-                New Password
-              </label>
-
+              <label>New Password</label>
 
               <input
-
                 type="password"
 
                 value={passwordForm.newPassword}
 
-
-                onChange={(e)=>
+                onChange={(e) =>
                   setPasswordForm({
                     ...passwordForm,
-                    newPassword:e.target.value,
+                    newPassword: e.target.value,
                   })
                 }
 
-
                 required
-
               />
-
             </div>
 
-
-
-
-
             <div className="field">
-
-              <label>
-                Confirm New Password
-              </label>
-
+              <label>Confirm New Password</label>
 
               <input
-
                 type="password"
 
                 value={passwordForm.confirmPassword}
 
-
-                onChange={(e)=>
+                onChange={(e) =>
                   setPasswordForm({
                     ...passwordForm,
-                    confirmPassword:e.target.value,
+                    confirmPassword: e.target.value,
                   })
                 }
 
-
                 required
-
               />
-
-
             </div>
 
-
-
-
             <div className="settings-actions">
-
-
-              <button
-                className="category-btn edit"
-                type="submit"
-              >
+              <button className="category-btn edit" type="submit">
                 Update Password
               </button>
 
-
-
-              <button
-                className="category-btn delete"
-                type="button"
-                onClick={backToPortal}
-              >
+              <button className="category-btn delete" type="button" onClick={backToPortal}>
                 Back
               </button>
-
-
             </div>
-
-
-
           </form>
-
-
         )}
-
-
       </div>
-
-
     </div>
-
   );
-
 }
-
 
 export default AccountSettings;

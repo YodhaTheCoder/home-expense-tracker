@@ -1,11 +1,49 @@
 import { api } from './api';
 
-export async function login(username, password) {
-  return await api.request('/login', {
-    method: 'POST',
-    body: JSON.stringify({
-      username,
-      password,
-    }),
+export async function login(email, password) {
+  const { data, error } = await api.auth.signInWithPassword({
+    email,
+    password,
   });
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function logout() {
+  const { error } = await api.auth.signOut();
+
+  if (error) {
+    throw error;
+  }
+}
+
+export async function changePassword(newPassword) {
+  const { data, error } = await api.auth.updateUser({
+    password: newPassword,
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+export async function sendPasswordReset(email) {
+  const redirectTo = 'http://localhost:3000/reset-password';
+  // const redirectTo = "https://YOUR_USERNAME.github.io/YOUR_REPOSITORY/reset-password";
+
+  const { error } = await api.auth.resetPasswordForEmail(email, {
+    redirectTo,
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return true;
 }

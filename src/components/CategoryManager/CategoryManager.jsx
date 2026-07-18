@@ -1,5 +1,6 @@
-import CategoryForm from './CategoryForm';
-import CategoryList from './CategoryList';
+import CategoryForm from './CategoryForm/CategoryForm.jsx';
+import CategoryList from './CategoryList/CategoryList.jsx';
+import './CategoryManager.css';
 
 export default function CategoryManager({
   categories,
@@ -26,7 +27,7 @@ export default function CategoryManager({
     }
 
     // User can modify only their own categories
-    return category.createdBy === user.username;
+    return category.created_by === user.id;
   }
 
   function handleDelete(category) {

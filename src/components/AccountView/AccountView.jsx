@@ -1,3 +1,5 @@
+import './AccountView.css';
+
 function AccountView({
   mode,
   user,
@@ -10,11 +12,9 @@ function AccountView({
   onCancel,
 }) {
   return (
-    <div className="auth" style={{ maxWidth: 640 }}>
-      <div className="login-banner" style={{ textAlign: 'center' }}>
-        <h2 style={{ margin: 0 }}>
-          {mode === 'profile' ? 'Profile Settings' : 'Password Settings'}
-        </h2>
+    <div className="auth">
+      <div className="login-banner">
+        <h2>{mode === 'profile' ? 'Profile Settings' : 'Password Settings'}</h2>
       </div>
       {mode === 'profile' ? (
         <form onSubmit={onSaveProfile}>
@@ -23,7 +23,7 @@ function AccountView({
             <input
               value={profileForm.full_name}
               onChange={(e) => onProfileChange(e.target.value)}
-              placeholder={user.username}
+              placeholder={user.email}
             />
           </div>
           <div className="inline-actions">

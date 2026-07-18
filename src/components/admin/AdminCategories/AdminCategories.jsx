@@ -1,4 +1,5 @@
-import CategoryForm from '../CategoryForm';
+import CategoryForm from '../../CategoryManager/CategoryForm/CategoryForm';
+import './AdminCategories.css';
 
 export default function AdminCategories({
   user,
@@ -18,7 +19,7 @@ export default function AdminCategories({
   return (
     <>
       <div className="card">
-        <h3 style={{ marginTop: 0 }}>{editingCategoryId ? 'Edit Category' : 'Add Category'}</h3>
+        <h3 class="section-title">{editingCategoryId ? 'Edit Category' : 'Add Category'}</h3>
 
         <CategoryForm
           categoryForm={categoryForm}
@@ -36,9 +37,9 @@ export default function AdminCategories({
       </div>
 
       <div className="card">
-        <h3 style={{ marginTop: 0 }}>Category Types</h3>
+        <h3 className="section-title">Category Types</h3>
 
-        <div className="list-item" style={{ fontWeight: 600 }}>
+        <div className="list-item list-header" style={{ fontWeight: 600 }}>
           <span>Name</span>
           <span>Actions</span>
         </div>
@@ -47,7 +48,7 @@ export default function AdminCategories({
           <div className="list-item" key={category.id}>
             <span>
               {category.name}{' '}
-              {category.isDefault ? (
+              {category.is_default ? (
                 <span className="pill">Default</span>
               ) : (
                 <span className="pill">Custom</span>
@@ -55,14 +56,14 @@ export default function AdminCategories({
             </span>
 
             <div className="inline-actions">
-              {(user.role === 'admin' || category.createdBy === user.username) && (
+              {(user.role === 'admin' || category.created_by === user.id) && (
                 <button className="btn btn-secondary" onClick={() => editCategory(category)}>
                   Edit
                 </button>
               )}
 
               {(user.role === 'admin' ||
-                (!category.isDefault && category.createdBy === user.username)) && (
+                (!category.is_default && category.created_by === user.id)) && (
                 <button className="btn btn-danger" onClick={() => removeCategory(category.id)}>
                   Delete
                 </button>

@@ -1,13 +1,14 @@
-import LoginScreen from '../components/LoginScreen';
+import LoginScreen from '../components/Auth/LoginScreen.jsx';
 
 export default function LoginPage({ auth }) {
   return (
     <LoginScreen
-      username={auth.username}
+      email={auth.email}
       password={auth.password}
-      onUsernameChange={auth.setUsername}
+      onEmailChange={auth.setEmail}
       onPasswordChange={auth.setPassword}
       onSubmit={auth.handleLogin}
+      onForgotPassword={auth.showForgotPassword}
       message={auth.message}
     />
   );

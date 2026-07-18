@@ -1,3 +1,5 @@
+import './StatsCard.css';
+
 function StatsCard({ label, value }) {
   return (
     <div className="stat">

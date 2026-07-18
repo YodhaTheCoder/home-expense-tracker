@@ -1,0 +1,21 @@
+.login-banner {
+  text-align: center;
+}
+
+.login-banner h2 {
+  margin: 0;
+}
+
+.forgot-password-action {
+  text-align: right;
+
+  margin-bottom: 16px;
+}
+
+.login-submit {
+  width: 100%;
+}
+
+.login-message {
+  margin-top: 12px;
+}

@@ -2,17 +2,26 @@ import { useState } from 'react';
 
 import { getSummary } from '../services/summaryService';
 
-export function useSummary(username) {
+export function useSummary(userId = null) {
   const [summary, setSummary] = useState(null);
 
-  async function loadSummary() {
-    const data = await getSummary(username);
+  const [message, setMessage] = useState('');
 
-    setSummary(data);
+  async function loadSummary(filters = {}) {
+    try {
+     
+      const data = await getSummary(userId, filters);
+
+      setSummary(data);
+    } catch (error) {
+      setMessage(error.message);
+    }
   }
 
   return {
     summary,
+
+    message,
 
     loadSummary,
   };

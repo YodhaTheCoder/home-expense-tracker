@@ -17,11 +17,10 @@ export function useUsers() {
     }
   }
 
-  async function saveUser(userForm, editingUserName) {
+  async function saveUser(userForm, editingUserId) {
     try {
-      if (editingUserName) {
-        await updateUser(editingUserName, {
-          password: userForm.password || undefined,
+      if (editingUserId) {
+        await updateUser(editingUserId, {
           full_name: userForm.full_name,
           role: userForm.role,
         });
@@ -29,13 +28,13 @@ export function useUsers() {
         setMessage('User updated.');
       } else {
         await createUser({
-          username: userForm.username,
+          email: userForm.email,
 
           password: userForm.password,
 
           full_name: userForm.full_name,
 
-          role: userForm.role,
+          role: userForm.role || 'user',
         });
 
         setMessage('User created.');
@@ -47,9 +46,9 @@ export function useUsers() {
     }
   }
 
-  async function removeUser(username) {
+  async function removeUser(userId) {
     try {
-      await deleteUser(username);
+      await deleteUser(userId);
 
       setMessage('User removed.');
 

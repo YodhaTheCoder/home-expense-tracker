@@ -1,10 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import PortalShell from '../../components/PortalShell';
-import AccountSettings from '../../components/AccountSettings';
-import Stats from '../../components/Stats';
-import CategoryManager from '../../components/CategoryManager';
-import UserManagement from '../../components/admin/UserManagement';
+import './AdminDashboard.css';
+
+import PortalShell from '../../components/PortalShell/PortalShell.jsx';
+import AccountSettings from '../../components/AccountSettings/AccountSettings.jsx';
+import Stats from '../../components/Stats/Stats.jsx';
+import CategoryManager from '../../components/CategoryManager/CategoryManager.jsx';
+import UserManagement from '../../components/admin/UserManagement/UserManagement.jsx';
+import ExpenseForm from '../../components/Expense/ExpenseForm/ExpenseForm.jsx';
+import ExpenseList from '../../components/Expense/ExpenseList/ExpenseList.jsx';
+
+import { useExpenses } from '../../hooks/useExpenses';
+
+import { useCategories } from '../../hooks/useCategories';
+import { useSummary } from '../../hooks/useSummary';
+
+import BudgetManagement from '../../components/admin/BudgetManagement/BudgetManagement.jsx';
+import { useBudget } from '../../hooks/useBudget';
+import BudgetSummary from '../../components/BudgetSummary/BudgetSummary.jsx';
 
 function AdminDashboard({ auth }) {
   const {
@@ -15,7 +28,8 @@ function AdminDashboard({ auth }) {
 
     users,
     categories,
-    summary,
+    // summary,
+    loadAdminData,
 
     activeAdminTab,
     setActiveAdminTab,
@@ -48,22 +62,57 @@ function AdminDashboard({ auth }) {
     deleteUser,
   } = auth;
 
+  const [expenseForm, setExpenseForm] = useState({
+    amount: '',
+    category_id: '',
+    description: '',
+    date: new Date().toISOString().split('T')[0],
+  });
+
+  const isSuperAdmin = auth.profile?.role === 'super_admin';
+
+  const [editingExpenseId, setEditingExpenseId] = useState(null);
+
+  const { expenses, saveExpense, deleteExpense, loadExpenses } = useExpenses();
+  const { summary, loadSummary } = useSummary();
+  //const { summary, loadAdminData } = auth;
+  const budget = useBudget(auth.profile);
+
+  const today = new Date();
+
+  const [summaryFilter, setSummaryFilter] = useState({
+    year: today.getFullYear(),
+    month: today.getMonth() + 1,
+  });
+
+  const { categories: adminCategories, loadCategories } = useCategories();
+
   useEffect(() => {
-    auth.loadAdminData();
-  }, [auth]);
+    loadCategories();
+    loadExpenses();
+  }, []);
 
+  useEffect(() => {
+    loadSummary(summaryFilter);
+  }, [summaryFilter.year, summaryFilter.month]);
 
-   if (accountView) {
+  useEffect(() => {
+    if (categories.length > 0 && !expenseForm.category_id) {
+      setExpenseForm((prev) => ({
+        ...prev,
+        category_id: categories[0].id,
+      }));
+    }
+  }, [categories]);
+
+  if (accountView) {
     return <AccountSettings auth={auth} />;
   }
+ 
 
   return (
     <PortalShell
       auth={auth}
-
-      title="Admin Portal"
-
-      subtitle="Manage categories, users, and review organization-wide spending."
 
       navItems={[
         {
@@ -71,13 +120,25 @@ function AdminDashboard({ auth }) {
           label: 'Dashboard',
         },
         {
+          id: 'entries',
+          label: 'Expenses',
+        },
+        {
           id: 'categories',
           label: 'Categories',
         },
-        {
-          id: 'users',
-          label: 'Users',
-        },
+        ...(isSuperAdmin
+          ? [
+              {
+                id: 'users',
+                label: 'Users',
+              },
+              {
+                id: 'budget',
+                label: 'Budget',
+              },
+            ]
+          : []),
       ]}
 
       activeNav={activeAdminTab}
@@ -85,15 +146,121 @@ function AdminDashboard({ auth }) {
       onNavigate={setActiveAdminTab}
     >
       {activeAdminTab === 'dashboard' && (
-  <Stats
-    summary={summary}
-    users={users}
-    categories={categories}
-    showUsers={true}
-    showUserTotals={true}
-  />
-)}
+        <>
+         
 
+          {summary?.budget && (
+            <BudgetSummary
+              title="Monthly Budget Planner"
+              budget={summary.budget.globalBudget}
+              expense={summary.budget.expense}
+              remaining={summary.budget.remaining}
+              percentage={summary.budget.percentage}
+              status={summary.budget.status}
+              summaryFilter={summaryFilter}
+              setSummaryFilter={setSummaryFilter}
+            />
+          )}
+
+          <Stats
+            summary={summary}
+            users={users}
+            categories={categories}
+            showUsers={true}
+            showUserTotals={true}
+          />
+        </>
+      )}
+
+      {summary?.userBudgets?.length > 0 && (
+        <div className="card">
+          <h3>Assigned User Budgets</h3>
+
+          {summary.userBudgets.map((item) => (
+            <BudgetSummary
+              key={item.user_id}
+
+              title={item.name}
+
+              budget={item.budget}
+
+              expense={item.expense}
+
+              remaining={item.remaining}
+
+              percentage={item.percentage}
+
+              status={item.status}
+            />
+          ))}
+        </div>
+      )}
+      {activeAdminTab === 'entries' && (
+        <>
+          <ExpenseForm
+            expenseForm={expenseForm}
+
+            setExpenseForm={setExpenseForm}
+
+            editingExpenseId={editingExpenseId}
+
+            setEditingExpenseId={setEditingExpenseId}
+
+            categories={categories}
+
+            addExpense={async (event) => {
+              await saveExpense(event, expenseForm, null);
+
+              await loadExpenses();
+              await loadSummary(summaryFilter);
+
+              setExpenseForm({
+                amount: '',
+                category_id: categories[0]?.id || '',
+                description: '',
+                date: new Date().toISOString().split('T')[0],
+              });
+            }}
+
+            saveExpense={async (event) => {
+              await saveExpense(event, expenseForm, editingExpenseId);
+
+              await loadExpenses();
+              await loadSummary(summaryFilter);
+
+              setEditingExpenseId(null);
+
+              setExpenseForm({
+                amount: '',
+                category_id: categories[0]?.id || '',
+                description: '',
+                date: new Date().toISOString().split('T')[0],
+              });
+            }}
+          />
+
+          <ExpenseList
+            expenses={expenses}
+
+            onDelete={async (id) => {
+              await deleteExpense(id);
+              await loadExpenses();
+              await loadSummary(summaryFilter);
+            }}
+
+            onEdit={(expense) => {
+              setEditingExpenseId(expense.id);
+
+              setExpenseForm({
+                amount: expense.amount,
+                category_id: expense.category_id,
+                description: expense.description,
+                date: expense.date?.slice(0, 10) || '',
+              });
+            }}
+          />
+        </>
+      )}
       {activeAdminTab === 'categories' && (
         <CategoryManager
           categories={categories}
@@ -135,7 +302,25 @@ function AdminDashboard({ auth }) {
         />
       )}
 
-      {activeAdminTab === 'users' && <UserManagement {...auth} />}
+      {isSuperAdmin && activeAdminTab === 'users' && <UserManagement {...auth} />}
+
+      {isSuperAdmin && activeAdminTab === 'budget' && (
+        <BudgetManagement
+          budgets={budget.budgets}
+
+          users={budget.users}
+
+          createBudget={budget.createBudget}
+
+          updateBudget={budget.updateBudget}
+
+          deleteBudget={budget.deleteBudget}
+
+          message={budget.message}
+
+          messageType={budget.messageType}
+        />
+      )}
     </PortalShell>
   );
 }

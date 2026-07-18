@@ -7,7 +7,7 @@ import {
   deleteCategory,
 } from '../services/categoryService';
 
-export function useCategories(username) {
+export function useCategories() {
   const [categories, setCategories] = useState([]);
 
   const [message, setMessage] = useState('');
@@ -25,9 +25,7 @@ export function useCategories(username) {
   async function addCategory(name) {
     try {
       await createCategory({
-        created_by: username,
-
-        name: name,
+        name,
       });
 
       setMessage('Category created.');
@@ -43,10 +41,8 @@ export function useCategories(username) {
       await updateCategory(
         id,
 
-        username,
-
         {
-          name: name,
+          name,
         }
       );
 
@@ -60,11 +56,7 @@ export function useCategories(username) {
 
   async function removeCategory(id) {
     try {
-      await deleteCategory(
-        id,
-
-        username
-      );
+      await deleteCategory(id);
 
       setMessage('Category removed.');
 
