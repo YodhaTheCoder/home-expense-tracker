@@ -15,10 +15,10 @@ function App() {
 
   const admin = useAdmin(auth.user, auth.profile);
 
-  const path = window.location.pathname;
+  const hasg = window.location.hash;
 
   // Password reset link from email
-  if (path.endsWith('/reset-password')) {
+  if (hash === "#/reset-password") {
     return <ResetPassword onReset={auth.resetPassword} message={auth.message} />;
   }
 
