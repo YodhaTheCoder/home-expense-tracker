@@ -1,74 +1,56 @@
 .donut-wrapper {
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
 
 .donut-container {
-  width:260px;
-  height:260px;
-  position:relative;
+  width: 260px;
+  height: 260px;
+  position: relative;
 }
-
 
 .donut-piece {
+  cursor: pointer;
 
-  cursor:pointer;
-
-  transform-origin:
-  center;
+  transform-origin: center;
 
   transition:
-  transform .3s ease,
-  opacity .3s ease;
-
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
-
 
 .donut-piece.active {
-
-  transform:
-  scale(1.08);
-
+  transform: scale(1.08);
 }
-
 
 .donut-piece.faded {
-
-  opacity:.25;
-
+  opacity: 0.25;
 }
-
-
 
 .donut-center {
+  position: absolute;
 
-  position:absolute;
+  inset: 0;
 
-  inset:0;
+  display: flex;
 
-  display:flex;
+  flex-direction: column;
 
-  flex-direction:column;
+  justify-content: center;
 
-  justify-content:center;
+  align-items: center;
 
-  align-items:center;
-
-  pointer-events:none;
-
+  pointer-events: none;
 }
-
 
 .donut-center span {
-  max-width:90px;
-  text-align:center;
-  font-size:13px;
+  max-width: 90px;
+  text-align: center;
+  font-size: 13px;
 }
 
-
 .donut-center strong {
-  font-size:20px;
-  margin-top:6px;
+  font-size: 20px;
+  margin-top: 6px;
 }

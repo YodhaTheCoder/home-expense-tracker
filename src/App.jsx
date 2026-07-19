@@ -18,7 +18,7 @@ function App() {
   const hash = window.location.hash;
 
   // Password reset link from email
-  if (hash === "#/reset-password") {
+  if (hash === '#/reset-password') {
     return <ResetPassword onReset={auth.resetPassword} message={auth.message} />;
   }
 

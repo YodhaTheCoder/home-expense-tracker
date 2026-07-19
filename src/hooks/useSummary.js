@@ -9,7 +9,6 @@ export function useSummary(userId = null) {
 
   async function loadSummary(filters = {}) {
     try {
-     
       const data = await getSummary(userId, filters);
 
       setSummary(data);

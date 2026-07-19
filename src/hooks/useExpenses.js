@@ -52,7 +52,6 @@ export function useExpenses() {
 
       await loadExpenses();
     } catch (error) {
-      
       setMessage(error.message);
     }
   }

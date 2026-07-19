@@ -1,265 +1,155 @@
 .header-right {
-
-  display:flex;
-  align-items:center;
-  gap:12px;
-
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-
-
 
 .filter-button {
+  background: #fff;
+  border: 1px solid #ddd;
 
-  background:#fff;
-  border:1px solid #ddd;
+  padding: 8px 18px;
 
-  padding:8px 18px;
+  border-radius: 20px;
 
-  border-radius:20px;
+  cursor: pointer;
 
-  cursor:pointer;
-
-  font-size:14px;
-
+  font-size: 14px;
 }
-
-
 
 .filter-button:hover {
-
-  background:#f3f4f6;
-
+  background: #f3f4f6;
 }
-
-
 
 /* Overlay */
 
 .filter-overlay {
+  position: fixed;
 
-  position:fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
+  background: rgba(0, 0, 0, 0.45);
 
-  background:rgba(0,0,0,0.45);
-
-  z-index:999;
-
+  z-index: 999;
 }
-
-
-
-
 
 /* Drawer */
 
 .filter-drawer {
+  position: fixed;
 
+  top: 0;
+  left: 0;
 
-  position:fixed;
+  width: 340px;
 
-  top:0;
-  left:0;
+  height: 100vh;
 
+  background: white;
 
-  width:340px;
+  z-index: 1000;
 
-  height:100vh;
+  padding: 20px;
 
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.25);
 
-  background:white;
-
-
-  z-index:1000;
-
-
-  padding:20px;
-
-
-  box-shadow:4px 0 15px rgba(0,0,0,.25);
-
-
-  overflow-y:auto;
-
-
+  overflow-y: auto;
 }
-
-
-
 
 .filter-title {
+  display: flex;
 
+  justify-content: space-between;
 
-  display:flex;
+  align-items: center;
 
-  justify-content:space-between;
+  border-bottom: 1px solid #ddd;
 
-  align-items:center;
-
-
-  border-bottom:1px solid #ddd;
-
-
-  padding-bottom:15px;
-
+  padding-bottom: 15px;
 }
-
-
 
 .filter-title button {
+  border: none;
 
+  background: none;
 
-  border:none;
+  font-size: 22px;
 
-  background:none;
-
-  font-size:22px;
-
-  cursor:pointer;
-
+  cursor: pointer;
 }
-
-
-
-
 
 .filter-section {
-
-
-  margin-top:25px;
-
-
+  margin-top: 25px;
 }
-
-
 
 .filter-section h4 {
-
-
-  margin-bottom:10px;
-
-
+  margin-bottom: 10px;
 }
-
-
-
-
 
 .filter-section select,
 .filter-section input {
+  width: 100%;
 
+  padding: 10px;
 
-  width:100%;
+  border: 1px solid #ccc;
 
-  padding:10px;
-
-
-  border:1px solid #ccc;
-
-  border-radius:6px;
-
-
+  border-radius: 6px;
 }
-
-
-
-
-
 
 .filter-actions {
+  position: fixed;
 
+  bottom: 20px;
 
-  position:fixed;
+  left: 20px;
 
-  bottom:20px;
+  width: 300px;
 
-  left:20px;
+  display: flex;
 
-  width:300px;
-
-
-  display:flex;
-
-  gap:10px;
-
-
+  gap: 10px;
 }
-
-
-
-
 
 .clear-button {
+  flex: 1;
 
+  padding: 12px;
 
-  flex:1;
+  border: none;
 
-  padding:12px;
+  border-radius: 6px;
 
-  border:none;
+  background: #e5e7eb;
 
-  border-radius:6px;
-
-
-  background:#e5e7eb;
-
-
-  cursor:pointer;
-
-
+  cursor: pointer;
 }
-
-
-
-
 
 .apply-button {
+  flex: 1;
 
+  padding: 12px;
 
-  flex:1;
+  border: none;
 
+  border-radius: 6px;
 
-  padding:12px;
+  background: #ff9900;
 
+  color: white;
 
-  border:none;
-
-
-  border-radius:6px;
-
-
-  background:#ff9900;
-
-
-  color:white;
-
-
-  cursor:pointer;
-
-
+  cursor: pointer;
 }
 
-
-
-
-@media(max-width:600px){
-
-
-  .filter-drawer{
-
-    width:85%;
-
+@media (max-width: 600px) {
+  .filter-drawer {
+    width: 85%;
   }
 
-
-  .filter-actions{
-
-    width:calc(85% - 40px);
-
+  .filter-actions {
+    width: calc(85% - 40px);
   }
-
-
 }

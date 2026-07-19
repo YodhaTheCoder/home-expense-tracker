@@ -63,10 +63,10 @@
 }
 
 .pie-section {
-  flex:1;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pie-chart {
@@ -137,8 +137,6 @@
 }
 
 @media (max-width: 600px) {
-
-  
   .stats-grid {
     grid-template-columns: 1fr;
   }

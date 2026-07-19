@@ -31,24 +31,20 @@ export async function getExpenses(userId = null) {
     throw new Error(error.message);
   }
 
-  const userIds = [
-    ...new Set(
-      expenses
-        .filter((item) => item.user_id)
-        .map((item) => item.user_id)
-    ),
-  ];
+  const userIds = [...new Set(expenses.filter((item) => item.user_id).map((item) => item.user_id))];
 
   let profiles = [];
 
   if (userIds.length > 0) {
     const { data, error } = await api
       .from('profiles')
-      .select(`
+      .select(
+        `
         id,
         full_name,
         email
-      `)
+      `
+      )
       .in('id', userIds);
 
     if (error) {
@@ -58,23 +54,21 @@ export async function getExpenses(userId = null) {
     profiles = data;
   }
 
-    return expenses.map((expense) => {
-    const profile = profiles.find(
-      (p) => p.id === expense.user_id
-    );
+  return expenses.map((expense) => {
+    const profile = profiles.find((p) => p.id === expense.user_id);
 
-  return {
-    ...expense,
-    category: expense.categories?.name,
-    full_name: profile?.full_name || profile?.email || 'Unknown',
-    date: expense.expense_date,
+    return {
+      ...expense,
+      category: expense.categories?.name,
+      full_name: profile?.full_name || profile?.email || 'Unknown',
+      date: expense.expense_date,
     };
   });
 }
 
 /**
  * Create expense
- */ 
+ */
 export async function createExpense(payload) {
   const {
     data: { user },

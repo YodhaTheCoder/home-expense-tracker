@@ -21,7 +21,7 @@ function PortalShell({
 
     setShowMobileNav(false);
   };
- 
+
   return (
     <div className="app-shell">
       {/* Top Header */}

@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import Select from "react-select";
+import { useState } from 'react';
+import Select from 'react-select';
 
 import './ExpenseForm.css';
 
@@ -15,14 +15,10 @@ function ExpenseForm({
 
   categories,
 }) {
-
- 
   function resetForm() {
     setEditingExpenseId(null);
 
-    const groceries = categories.find(
-    (category) => category.name === 'Groceries'
-  );
+    const groceries = categories.find((category) => category.name === 'Groceries');
 
     setExpenseForm({
       amount: '',
@@ -57,38 +53,36 @@ function ExpenseForm({
             />
           </div>
 
-         <div className="field">
-  <label>Category</label>
+          <div className="field">
+            <label>Category</label>
 
-  <Select
-    isClearable
-    isSearchable
-    placeholder="Type or select category"
+            <Select
+              isClearable
+              isSearchable
+              placeholder="Type or select category"
 
-    options={categories.map((category) => ({
-      value: category.id,
-      label: category.name,
-    }))}
+              options={categories.map((category) => ({
+                value: category.id,
+                label: category.name,
+              }))}
 
-    value={
-      categories
-        .filter(
-          (category) => category.id === expenseForm.category_id
-        )
-        .map((category) => ({
-          value: category.id,
-          label: category.name,
-        }))[0] || null
-    }
+              value={
+                categories
+                  .filter((category) => category.id === expenseForm.category_id)
+                  .map((category) => ({
+                    value: category.id,
+                    label: category.name,
+                  }))[0] || null
+              }
 
-    onChange={(selected) => {
-      setExpenseForm({
-        ...expenseForm,
-        category_id: selected ? selected.value : '',
-      });
-    }}
-  />
-</div>
+              onChange={(selected) => {
+                setExpenseForm({
+                  ...expenseForm,
+                  category_id: selected ? selected.value : '',
+                });
+              }}
+            />
+          </div>
 
           <div className="field">
             <label>Date</label>

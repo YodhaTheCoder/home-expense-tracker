@@ -11,7 +11,6 @@ import ExpenseForm from '../../components/Expense/ExpenseForm/ExpenseForm.jsx';
 import ExpenseList from '../../components/Expense/ExpenseList/ExpenseList.jsx';
 
 import { useExpenses } from '../../hooks/useExpenses';
-
 import { useCategories } from '../../hooks/useCategories';
 import { useSummary } from '../../hooks/useSummary';
 
@@ -22,23 +21,13 @@ import BudgetSummary from '../../components/BudgetSummary/BudgetSummary.jsx';
 function AdminDashboard({ auth }) {
   const {
     user,
-    logout,
-    message,
-    loginMessage,
-
     users,
     categories,
-    // summary,
-    loadAdminData,
 
     activeAdminTab,
     setActiveAdminTab,
 
-    showMenu,
-    setShowMenu,
-
     accountView,
-    setAccountView,
 
     categoryForm,
     setCategoryForm,
@@ -46,50 +35,49 @@ function AdminDashboard({ auth }) {
     editingCategoryId,
     setEditingCategoryId,
 
-    userForm,
-    setUserForm,
-
-    editingUserName,
-    setEditingUserName,
-
     addCategory,
     saveCategory,
     editCategory,
     removeCategory,
-
-    createUser,
-    editUser,
-    deleteUser,
   } = auth;
 
+  const getDefaultCategoryId = () => {
+    return categories.find((category) => category.name === 'Groceries')?.id || '';
+  };
 
   const [expenseForm, setExpenseForm] = useState({
     amount: '',
+
     category_id: '',
+
     description: '',
+
     date: new Date().toISOString().split('T')[0],
   });
 
-  const isSuperAdmin = auth.profile?.role === 'super_admin';
-
   const [editingExpenseId, setEditingExpenseId] = useState(null);
 
+  const isSuperAdmin = auth.profile?.role === 'super_admin';
+
   const { expenses, saveExpense, deleteExpense, loadExpenses } = useExpenses();
+
   const { summary, loadSummary } = useSummary();
-  //const { summary, loadAdminData } = auth;
+
   const budget = useBudget(auth.profile);
 
   const today = new Date();
 
   const [summaryFilter, setSummaryFilter] = useState({
     year: today.getFullYear(),
+
     month: today.getMonth() + 1,
   });
 
-  const { categories: adminCategories, loadCategories } = useCategories();
+  const { loadCategories } = useCategories();
 
   useEffect(() => {
     loadCategories();
+
     loadExpenses();
   }, []);
 
@@ -97,23 +85,21 @@ function AdminDashboard({ auth }) {
     loadSummary(summaryFilter);
   }, [summaryFilter.year, summaryFilter.month]);
 
- useEffect(() => {
-  const groceries = categories.find(
-    (category) => category.name === 'Groceries'
-  );
+  useEffect(() => {
+    const groceries = categories.find((category) => category.name === 'Groceries');
 
-  if (groceries && !expenseForm.category_id) {
-    setExpenseForm((prev) => ({
-      ...prev,
-      category_id: groceries.id,
-    }));
-  }
-}, [categories]);
+    if (groceries && !expenseForm.category_id) {
+      setExpenseForm((prev) => ({
+        ...prev,
+
+        category_id: groceries.id,
+      }));
+    }
+  }, [categories]);
 
   if (accountView) {
     return <AccountSettings auth={auth} />;
   }
- 
 
   return (
     <PortalShell
@@ -124,20 +110,24 @@ function AdminDashboard({ auth }) {
           id: 'dashboard',
           label: 'Dashboard',
         },
+
         {
           id: 'entries',
           label: 'Expenses',
         },
+
         {
           id: 'categories',
           label: 'Categories',
         },
+
         ...(isSuperAdmin
           ? [
               {
                 id: 'users',
                 label: 'Users',
               },
+
               {
                 id: 'budget',
                 label: 'Budget',
@@ -152,26 +142,35 @@ function AdminDashboard({ auth }) {
     >
       {activeAdminTab === 'dashboard' && (
         <>
-         
-
           {summary?.budget && (
             <BudgetSummary
               title="Monthly Budget Planner"
+
               budget={summary.budget.globalBudget}
+
               expense={summary.budget.expense}
+
               remaining={summary.budget.remaining}
+
               percentage={summary.budget.percentage}
+
               status={summary.budget.status}
+
               summaryFilter={summaryFilter}
+
               setSummaryFilter={setSummaryFilter}
             />
           )}
 
           <Stats
             summary={summary}
+
             users={users}
+
             categories={categories}
+
             showUsers={true}
+
             showUserTotals={true}
           />
         </>
@@ -200,6 +199,7 @@ function AdminDashboard({ auth }) {
           ))}
         </div>
       )}
+
       {activeAdminTab === 'entries' && (
         <>
           <ExpenseForm
@@ -214,41 +214,53 @@ function AdminDashboard({ auth }) {
             categories={categories}
 
             addExpense={async (event) => {
-              await saveExpense(event, expenseForm, null);
+              await saveExpense(
+                event,
+
+                expenseForm,
+
+                null
+              );
 
               await loadExpenses();
+
               await loadSummary(summaryFilter);
 
-             const groceries = categories.find(
-  (category) => category.name === 'Groceries'
-);
+              setExpenseForm({
+                amount: '',
 
-setExpenseForm({
-  amount: '',
-  category_id: groceries?.id || '',
-  description: '',
-  date: new Date().toISOString().split('T')[0],
-});
+                category_id: getDefaultCategoryId(),
+
+                description: '',
+
+                date: new Date().toISOString().split('T')[0],
+              });
             }}
 
             saveExpense={async (event) => {
-              await saveExpense(event, expenseForm, editingExpenseId);
+              await saveExpense(
+                event,
+
+                expenseForm,
+
+                editingExpenseId
+              );
 
               await loadExpenses();
+
               await loadSummary(summaryFilter);
 
               setEditingExpenseId(null);
 
-             const groceries = categories.find(
-  (category) => category.name === 'Groceries'
-);
+              setExpenseForm({
+                amount: '',
 
-setExpenseForm({
-  amount: '',
-  category_id: groceries?.id || '',
-  description: '',
-  date: new Date().toISOString().split('T')[0],
-});
+                category_id: getDefaultCategoryId(),
+
+                description: '',
+
+                date: new Date().toISOString().split('T')[0],
+              });
             }}
           />
 
@@ -257,7 +269,9 @@ setExpenseForm({
 
             onDelete={async (id) => {
               await deleteExpense(id);
+
               await loadExpenses();
+
               await loadSummary(summaryFilter);
             }}
 
@@ -266,14 +280,18 @@ setExpenseForm({
 
               setExpenseForm({
                 amount: expense.amount,
+
                 category_id: expense.category_id,
+
                 description: expense.description,
+
                 date: expense.date?.slice(0, 10) || '',
               });
             }}
           />
         </>
       )}
+
       {activeAdminTab === 'categories' && (
         <CategoryManager
           categories={categories}
@@ -295,6 +313,7 @@ setExpenseForm({
               {
                 preventDefault: () => {},
               },
+
               name
             );
           }}
@@ -304,7 +323,9 @@ setExpenseForm({
               {
                 preventDefault: () => {},
               },
+
               id,
+
               name
             );
           }}

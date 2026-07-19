@@ -34,7 +34,7 @@ export default function Stats({
                   <span
                     style={{
                       width: `${Math.max(8, (item.amount / maxCategory) * 100)}%`,
-                       background: categoryColors[index % categoryColors.length],
+                      background: categoryColors[index % categoryColors.length],
                     }}
                   />
                 </div>
@@ -45,10 +45,8 @@ export default function Stats({
           </div>
 
           <div className="pie-section">
-  <ExpenseDonut data={summary.byCategory} />
-
- 
-</div>
+            <ExpenseDonut data={summary.byCategory} />
+          </div>
         </div>
       </div>
 
