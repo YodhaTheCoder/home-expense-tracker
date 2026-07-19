@@ -1,39 +1,265 @@
-.expense-list-card {
-  width: 100%;
+.header-right {
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+
 }
 
-.expense-list-card .section-header {
-  display: flex;
 
-  justify-content: space-between;
 
-  align-items: center;
+.filter-button {
 
-  margin-bottom: 20px;
+  background:#fff;
+  border:1px solid #ddd;
+
+  padding:8px 18px;
+
+  border-radius:20px;
+
+  cursor:pointer;
+
+  font-size:14px;
+
 }
 
-.expense-list-card .username-text {
-  margin: 8px 0;
 
-  color: #64748b;
 
-  font-size: 14px;
+.filter-button:hover {
+
+  background:#f3f4f6;
+
 }
 
-.expense-description {
-  margin-top: 16px;
 
-  color: #64748b;
 
-  font-size: 14px;
+/* Overlay */
+
+.filter-overlay {
+
+  position:fixed;
+
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+
+  background:rgba(0,0,0,0.45);
+
+  z-index:999;
+
 }
 
-@media (max-width: 600px) {
-  .expense-list-card .section-header {
-    flex-direction: column;
 
-    align-items: flex-start;
 
-    gap: 12px;
+
+
+/* Drawer */
+
+.filter-drawer {
+
+
+  position:fixed;
+
+  top:0;
+  left:0;
+
+
+  width:340px;
+
+  height:100vh;
+
+
+  background:white;
+
+
+  z-index:1000;
+
+
+  padding:20px;
+
+
+  box-shadow:4px 0 15px rgba(0,0,0,.25);
+
+
+  overflow-y:auto;
+
+
+}
+
+
+
+
+.filter-title {
+
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+
+  border-bottom:1px solid #ddd;
+
+
+  padding-bottom:15px;
+
+}
+
+
+
+.filter-title button {
+
+
+  border:none;
+
+  background:none;
+
+  font-size:22px;
+
+  cursor:pointer;
+
+}
+
+
+
+
+
+.filter-section {
+
+
+  margin-top:25px;
+
+
+}
+
+
+
+.filter-section h4 {
+
+
+  margin-bottom:10px;
+
+
+}
+
+
+
+
+
+.filter-section select,
+.filter-section input {
+
+
+  width:100%;
+
+  padding:10px;
+
+
+  border:1px solid #ccc;
+
+  border-radius:6px;
+
+
+}
+
+
+
+
+
+
+.filter-actions {
+
+
+  position:fixed;
+
+  bottom:20px;
+
+  left:20px;
+
+  width:300px;
+
+
+  display:flex;
+
+  gap:10px;
+
+
+}
+
+
+
+
+
+.clear-button {
+
+
+  flex:1;
+
+  padding:12px;
+
+  border:none;
+
+  border-radius:6px;
+
+
+  background:#e5e7eb;
+
+
+  cursor:pointer;
+
+
+}
+
+
+
+
+
+.apply-button {
+
+
+  flex:1;
+
+
+  padding:12px;
+
+
+  border:none;
+
+
+  border-radius:6px;
+
+
+  background:#ff9900;
+
+
+  color:white;
+
+
+  cursor:pointer;
+
+
+}
+
+
+
+
+@media(max-width:600px){
+
+
+  .filter-drawer{
+
+    width:85%;
+
   }
+
+
+  .filter-actions{
+
+    width:calc(85% - 40px);
+
+  }
+
+
 }

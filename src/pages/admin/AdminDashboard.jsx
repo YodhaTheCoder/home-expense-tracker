@@ -62,6 +62,7 @@ function AdminDashboard({ auth }) {
     deleteUser,
   } = auth;
 
+
   const [expenseForm, setExpenseForm] = useState({
     amount: '',
     category_id: '',
@@ -96,14 +97,18 @@ function AdminDashboard({ auth }) {
     loadSummary(summaryFilter);
   }, [summaryFilter.year, summaryFilter.month]);
 
-  useEffect(() => {
-    if (categories.length > 0 && !expenseForm.category_id) {
-      setExpenseForm((prev) => ({
-        ...prev,
-        category_id: categories[0].id,
-      }));
-    }
-  }, [categories]);
+ useEffect(() => {
+  const groceries = categories.find(
+    (category) => category.name === 'Groceries'
+  );
+
+  if (groceries && !expenseForm.category_id) {
+    setExpenseForm((prev) => ({
+      ...prev,
+      category_id: groceries.id,
+    }));
+  }
+}, [categories]);
 
   if (accountView) {
     return <AccountSettings auth={auth} />;
@@ -214,12 +219,16 @@ function AdminDashboard({ auth }) {
               await loadExpenses();
               await loadSummary(summaryFilter);
 
-              setExpenseForm({
-                amount: '',
-                category_id: categories[0]?.id || '',
-                description: '',
-                date: new Date().toISOString().split('T')[0],
-              });
+             const groceries = categories.find(
+  (category) => category.name === 'Groceries'
+);
+
+setExpenseForm({
+  amount: '',
+  category_id: groceries?.id || '',
+  description: '',
+  date: new Date().toISOString().split('T')[0],
+});
             }}
 
             saveExpense={async (event) => {
@@ -230,12 +239,16 @@ function AdminDashboard({ auth }) {
 
               setEditingExpenseId(null);
 
-              setExpenseForm({
-                amount: '',
-                category_id: categories[0]?.id || '',
-                description: '',
-                date: new Date().toISOString().split('T')[0],
-              });
+             const groceries = categories.find(
+  (category) => category.name === 'Groceries'
+);
+
+setExpenseForm({
+  amount: '',
+  category_id: groceries?.id || '',
+  description: '',
+  date: new Date().toISOString().split('T')[0],
+});
             }}
           />
 

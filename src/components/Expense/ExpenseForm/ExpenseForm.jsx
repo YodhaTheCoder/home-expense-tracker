@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Select from "react-select";
 
 import './ExpenseForm.css';
 
@@ -15,17 +16,17 @@ function ExpenseForm({
   categories,
 }) {
 
-  const [categoryText, setCategoryText] = useState(
-  categories.find((category) => category.name === 'Groceries')?.name || ''
-);
-
-
+ 
   function resetForm() {
     setEditingExpenseId(null);
 
+    const groceries = categories.find(
+    (category) => category.name === 'Groceries'
+  );
+
     setExpenseForm({
       amount: '',
-      category_id: categories.find((category) => category.name === 'Groceries')?.id || '',
+      category_id: groceries ? groceries.id : '',
       description: '',
       date: new Date().toISOString().split('T')[0],
     });
@@ -59,32 +60,34 @@ function ExpenseForm({
          <div className="field">
   <label>Category</label>
 
-  <input
-    list="category-options"
-    value={categoryText}
-    onChange={(e) => {
-      const value = e.target.value;
+  <Select
+    isClearable
+    isSearchable
+    placeholder="Type or select category"
 
-      setCategoryText(value);
+    options={categories.map((category) => ({
+      value: category.id,
+      label: category.name,
+    }))}
 
-      const selectedCategory = categories.find(
-        (category) => category.name === value
-      );
+    value={
+      categories
+        .filter(
+          (category) => category.id === expenseForm.category_id
+        )
+        .map((category) => ({
+          value: category.id,
+          label: category.name,
+        }))[0] || null
+    }
 
+    onChange={(selected) => {
       setExpenseForm({
         ...expenseForm,
-        category_id: selectedCategory ? selectedCategory.id : '',
+        category_id: selected ? selected.value : '',
       });
     }}
-    placeholder="Type or select category"
-    required
   />
-
-  <datalist id="category-options">
-    {categories.map((category) => (
-      <option key={category.id} value={category.name} />
-    ))}
-  </datalist>
 </div>
 
           <div className="field">
