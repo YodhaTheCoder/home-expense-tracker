@@ -82,13 +82,6 @@ const money = useMoneyTracker(
 
   const budget = useBudget(auth.profile);
 
-  const today = new Date();
-
-  const [summaryFilter, setSummaryFilter] = useState({
-    year: today.getFullYear(),
-
-    month: today.getMonth() + 1,
-  });
 
   const { loadCategories } = useCategories();
 
