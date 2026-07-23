@@ -34,7 +34,7 @@ export async function changePassword(newPassword) {
 }
 
 export async function sendPasswordReset(email) {
-  const redirectTo = 'https://YodhaTheCoder.github.io/home-expense-tracker/#/reset-password';
+  const redirectTo = 'https://yodhathecoder.github.io/home-expense-tracker/reset-password';
 
   const { error } = await api.auth.resetPasswordForEmail(email, {
     redirectTo,

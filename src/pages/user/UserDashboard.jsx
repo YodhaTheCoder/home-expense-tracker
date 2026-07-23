@@ -15,6 +15,10 @@ import { useExpenses } from '../../hooks/useExpenses';
 import { useCategories } from '../../hooks/useCategories';
 import { useSummary } from '../../hooks/useSummary';
 
+import MoneyTracker from '../../components/MoneyTracker/MoneyTracker.jsx';
+import { useMoneyTracker } from '../../hooks/useMoneyTracker';
+
+
 export default function UserDashboard({ auth }) {
   const [activeTab, setActiveTab] = useState('dashboard');
 
@@ -49,9 +53,23 @@ export default function UserDashboard({ auth }) {
   const { categories, loadCategories, addCategory, saveCategory, removeCategory } = useCategories();
 
   const { summary, loadSummary } = useSummary(auth.user.id);
+  
+  const today = new Date();
+
+const [summaryFilter, setSummaryFilter] = useState({
+
+  month: null,
+
+  year: null,
+
+});
+
+
+  const money = useMoneyTracker(auth.user.id,summaryFilter);
 
   const { accountView } = auth;
 
+  
   useEffect(() => {
     loadExpenses();
 
@@ -140,6 +158,10 @@ export default function UserDashboard({ auth }) {
           id: 'categories',
           label: 'Categories',
         },
+        {
+    id:'money',
+    label:'Money Given/Taken'
+},
       ]}
 
       activeNav={activeTab}
@@ -240,6 +262,34 @@ export default function UserDashboard({ auth }) {
         </>
       )}
 
+ {activeTab === 'money' && (
+
+    <MoneyTracker
+
+    moneyDues={money.moneyDues}
+
+    summary={money.summary}
+
+    loadMoney={money.loadMoney}
+
+    saveMoney={money.saveMoney}
+
+    deleteMoney={money.deleteMoney}
+
+    addPayment={money.addPayment}
+
+     editPayment={money.editPayment}
+     
+    deletePayment={money.deletePayment}
+
+    savePayment={money.savePayment}
+
+    message={money.message}
+
+/>
+
+)}
+
       {activeTab === 'categories' && (
         <CategoryManager
           categories={categories}
@@ -265,6 +315,8 @@ export default function UserDashboard({ auth }) {
           removeCategory={removeCategory}
         />
       )}
+
+     
     </PortalShell>
   );
 }

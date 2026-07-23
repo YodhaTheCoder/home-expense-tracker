@@ -1,0 +1,38 @@
+.money-summary {
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:15px;
+
+margin-bottom:20px;
+
+}
+
+
+.money-card {
+
+background:white;
+
+padding:20px;
+
+border-radius:12px;
+
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+text-align:center;
+
+}
+
+
+
+@media(max-width:768px){
+
+.money-summary{
+
+grid-template-columns:1fr;
+
+}
+
+}

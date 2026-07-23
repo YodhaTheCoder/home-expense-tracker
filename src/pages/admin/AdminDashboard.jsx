@@ -18,6 +18,9 @@ import BudgetManagement from '../../components/admin/BudgetManagement/BudgetMana
 import { useBudget } from '../../hooks/useBudget';
 import BudgetSummary from '../../components/BudgetSummary/BudgetSummary.jsx';
 
+import MoneyTracker from '../../components/MoneyTracker/MoneyTracker.jsx';
+import { useMoneyTracker } from '../../hooks/useMoneyTracker';
+
 function AdminDashboard({ auth }) {
   const {
     user,
@@ -63,6 +66,20 @@ function AdminDashboard({ auth }) {
 
   const { summary, loadSummary } = useSummary();
 
+const today = new Date();
+
+const [summaryFilter, setSummaryFilter] = useState({
+  year: null,
+  month: null,
+});
+
+
+const money = useMoneyTracker(
+  null,
+  summaryFilter
+);
+
+
   const budget = useBudget(auth.profile);
 
   const today = new Date();
@@ -77,8 +94,8 @@ function AdminDashboard({ auth }) {
 
   useEffect(() => {
     loadCategories();
-
     loadExpenses();
+    money.loadMoney();
   }, []);
 
   useEffect(() => {
@@ -115,6 +132,11 @@ function AdminDashboard({ auth }) {
           id: 'entries',
           label: 'Expenses',
         },
+
+        {
+ id:'money',
+ label:'Money Given/Taken'
+},
 
         {
           id: 'categories',
@@ -291,6 +313,31 @@ function AdminDashboard({ auth }) {
           />
         </>
       )}
+
+{activeAdminTab === 'money' && (
+
+    <MoneyTracker
+
+        moneyDues={money.moneyDues}
+
+        summary={money.summary}
+
+        loadMoney={money.loadMoney}
+
+        saveMoney={money.saveMoney}
+
+        deleteMoney={money.deleteMoney}
+
+        savePayment={money.savePayment}
+         editPayment={money.editPayment}
+    deletePayment={money.deletePayment}
+        message={money.message}
+ summaryFilter={summaryFilter}
+
+    setSummaryFilter={setSummaryFilter}
+    />
+
+)}
 
       {activeAdminTab === 'categories' && (
         <CategoryManager

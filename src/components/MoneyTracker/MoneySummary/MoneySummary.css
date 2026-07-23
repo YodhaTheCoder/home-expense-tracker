@@ -1,0 +1,505 @@
+.money-summary-card {
+
+  
+  background: #fff;
+
+  overflow: hidden;
+
+  border-radius: 24px;
+
+  padding: 7px;
+
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+
+  margin-bottom: 24px;
+}
+
+
+/* Top purple section */
+
+.money-summary-top {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+
+  padding: 20px 24px 50px;
+
+  text-align: center;
+
+  color: white;
+
+  border-radius: 24px 24px 0 0;
+
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.35);
+}
+
+
+.money-summary-top h3 {
+
+  margin: 0;
+
+  font-size: 20px;
+
+}
+
+
+.money-summary-top span {
+
+  display:block;
+
+  margin-top:12px;
+
+  font-size:14px;
+
+  color:rgba(255,255,255,.85);
+
+}
+
+
+.money-summary-top h1 {
+
+  margin:6px 0 0;
+
+  font-size:42px;
+
+  line-height:1.1;
+
+  color:white;
+
+}
+
+
+
+/* Bottom white content */
+
+.money-summary-content {
+
+  background:white;
+
+  margin:-22px 0 0;
+
+  padding:22px;
+
+  border-radius:30px;
+
+  position:relative;
+
+  z-index:2;
+
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+}
+
+
+
+.money-summary-grid {
+
+  display:grid;
+
+  grid-template-columns:repeat(2,minmax(0,1fr));
+
+  gap:16px;
+
+  margin-top:10px;
+
+  width:100%;
+
+}
+
+
+
+.money-box {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  border-radius: 18px;
+
+  padding: 12px 16px;
+
+  border: 1px solid;
+}
+
+
+
+.money-box span {
+
+  display:block;
+
+  font-size:14px;
+
+  color:#6b7280;
+
+}
+
+
+.money-box strong {
+
+  display:block;
+
+  margin-top:8px;
+
+  font-size:26px;
+
+}
+
+
+
+
+/* Given */
+
+.money-given {
+
+  background:#f0fdf4;
+
+  border-color:#86efac;
+
+}
+
+
+
+.money-given strong {
+
+  color:#16a34a;
+
+}
+
+
+
+/* Taken */
+
+.money-taken {
+
+  background:#fef2f2;
+
+  border-color:#fca5a5;
+
+}
+
+
+
+.money-taken strong {
+
+  color:#dc2626;
+
+}
+
+
+/* Balance */
+
+.money-balance {
+
+  background:#eff6ff;
+
+  border-color:#93c5fd;
+
+}
+
+
+.money-balance strong {
+
+  color:#2563eb;
+
+}
+
+
+
+/* Progress */
+
+
+.money-progress-wrapper {
+
+  margin-top:24px;
+
+}
+
+
+
+.money-progress {
+
+  height:10px;
+
+  background:#e5e7eb;
+
+  border-radius:10px;
+
+  overflow:hidden;
+
+}
+
+
+
+.money-progress-bar {
+
+  height:100%;
+
+  background:#8b5cf6;
+
+  border-radius:10px;
+
+}
+
+
+
+
+.money-progress-info {
+
+  margin-top:10px;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  font-size:14px;
+
+  font-weight:600;
+
+  color:#6d28d9;
+
+}
+
+.money-period-wrapper {
+
+  display:inline-flex;
+
+  align-items:center;
+
+  background:rgba(255,255,255,0.18);
+
+  border-radius:20px;
+
+  padding:4px 12px;
+
+  gap:4px;
+
+  margin-bottom:10px;
+
+}
+
+
+.money-period {
+
+  appearance:none;
+
+  -webkit-appearance:none;
+
+  background:transparent;
+
+  border:none;
+
+  color:white;
+
+  font-size:12px;
+
+  font-weight:600;
+
+  height:28px;
+
+  outline:none;
+
+  cursor:pointer;
+
+}
+
+
+.money-month {
+
+  width:95px;
+
+}
+
+
+.money-year {
+
+  width:55px;
+
+}
+
+
+/* dropdown list */
+
+.money-period option {
+
+  background:#8b5cf6;
+
+  color:white;
+
+}
+
+.money-summary-period-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 8px;
+
+  margin: 12px auto 16px;
+
+  width: fit-content;
+
+  background: rgba(255, 255, 255, 0.18);
+
+  padding: 8px 12px;
+  min-height: 25px;
+
+  border-radius: 20px;
+
+  backdrop-filter: blur(8px);
+
+  position: relative;
+
+  z-index: 5;
+}
+
+
+.money-summary-period {
+  appearance: none;
+  -webkit-appearance: none;
+
+  background: transparent;
+
+  border: none;
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  outline: none;
+
+  cursor: pointer;
+
+  height: 25px;
+
+  padding: 0 6px;
+
+}
+
+
+/* Month dropdown */
+.money-summary-month {
+  width: 110px;
+}
+
+
+/* Year dropdown */
+.money-summary-year {
+  width: 70px;
+}
+
+
+
+.money-summary-period option {
+
+  background: #6d28d9;
+
+  color: white;
+
+  font-weight: 500;
+
+}
+
+
+/* mobile */
+@media(max-width:600px){
+
+
+  .money-summary-grid {
+
+    grid-template-columns:repeat(2,minmax(0,1fr));
+
+    gap:8px;
+
+  }
+  
+  .money-summary-period-wrapper{
+
+      width: fit-content;
+
+    justify-content:center;
+
+    padding:0px 10px;
+
+    gap:6px;
+    
+
+  }
+
+
+  .money-summary-month{
+
+    width:80px;
+    padding-left:0px;
+  }
+
+
+  .money-summary-year{
+
+    width:60px;
+    padding-right:0px;
+  }
+
+
+  .money-summary-period{
+
+    height:20px;
+    font-size:13px;
+  }
+
+
+
+
+
+
+.money-summary-top {
+
+  padding:20px 16px 45px;
+
+}
+
+
+.money-summary-top h1 {
+
+  font-size:36px;
+
+}
+
+
+
+.money-summary-content {
+  width: 100%;
+  padding:1px 10px 20px;
+
+}
+
+
+
+
+
+
+
+.money-box {
+
+    padding:12px;
+
+    border-radius:16px;
+
+  }
+
+
+  .money-box strong {
+
+    font-size:18px;
+
+    white-space:nowrap;
+
+  }
+
+
+  .money-box span {
+
+    font-size:12px;
+
+  }
+
+
+}
