@@ -68,15 +68,19 @@ function AdminDashboard({ auth }) {
 
 const today = new Date();
 
-const [summaryFilter, setSummaryFilter] = useState({
-  year: null,
-  month: null,
+const [budgetFilter, setBudgetFilter] = useState({
+  month: today.getMonth() + 1,
+  year: today.getFullYear(),
 });
 
+const [moneyFilter, setMoneyFilter] = useState({
+  month: null,
+  year: null,
+});
 
 const money = useMoneyTracker(
   null,
-  summaryFilter
+  moneyFilter
 );
 
 
@@ -92,8 +96,8 @@ const money = useMoneyTracker(
   }, []);
 
   useEffect(() => {
-    loadSummary(summaryFilter);
-  }, [summaryFilter.year, summaryFilter.month]);
+    loadSummary(budgetFilter);
+  }, [budgetFilter.year, budgetFilter.month]);
 
   useEffect(() => {
     const groceries = categories.find((category) => category.name === 'Groceries');
@@ -171,9 +175,9 @@ const money = useMoneyTracker(
 
               status={summary.budget.status}
 
-              summaryFilter={summaryFilter}
+              summaryFilter={budgetFilter}
 
-              setSummaryFilter={setSummaryFilter}
+              setSummaryFilter={setBudgetFilter}
             />
           )}
 
@@ -239,7 +243,7 @@ const money = useMoneyTracker(
 
               await loadExpenses();
 
-              await loadSummary(summaryFilter);
+              await loadSummary(budgetFilter);
 
               setExpenseForm({
                 amount: '',
@@ -263,7 +267,7 @@ const money = useMoneyTracker(
 
               await loadExpenses();
 
-              await loadSummary(summaryFilter);
+              await loadSummary(budgetFilter);
 
               setEditingExpenseId(null);
 
@@ -287,7 +291,7 @@ const money = useMoneyTracker(
 
               await loadExpenses();
 
-              await loadSummary(summaryFilter);
+              await loadSummary(budgetFilter);
             }}
 
             onEdit={(expense) => {
@@ -325,9 +329,9 @@ const money = useMoneyTracker(
          editPayment={money.editPayment}
     deletePayment={money.deletePayment}
         message={money.message}
- summaryFilter={summaryFilter}
+ summaryFilter={moneyFilter}
 
-    setSummaryFilter={setSummaryFilter}
+    setSummaryFilter={setMoneyFilter}
     />
 
 )}

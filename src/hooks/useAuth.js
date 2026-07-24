@@ -165,8 +165,12 @@ export function useAuth() {
       await changePassword(newPassword);
 
       setMessage('Password updated successfully. Please login.');
+
+      await api.auth.signOut();
+      return true
     } catch (error) {
       setMessage(error.message);
+      return false
     }
   }
 

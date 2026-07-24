@@ -17,7 +17,7 @@ function App() {
 
   const isResetPassword = window.location.pathname.includes('/reset-password');
   // Password reset link from email
-  if (isResetPassword) {
+  if (isResetPassword && auth.user) {
     return <ResetPassword onReset={auth.resetPassword} message={auth.message} />;
   }
 

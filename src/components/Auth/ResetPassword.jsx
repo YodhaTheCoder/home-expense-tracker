@@ -13,7 +13,11 @@ function ResetPassword({ onReset, message }) {
       return;
     }
 
-    await onReset(password);
+    const success = await onReset(password);
+
+    if (success) {
+    window.location.replace("/");
+  }
   }
 
   return (

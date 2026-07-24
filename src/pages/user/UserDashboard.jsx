@@ -56,16 +56,13 @@ export default function UserDashboard({ auth }) {
   
   const today = new Date();
 
-const [summaryFilter, setSummaryFilter] = useState({
-
+const [moneyFilter, setMoneyFilter] = useState({
   month: null,
-
   year: null,
-
 });
 
 
-  const money = useMoneyTracker(auth.user.id,summaryFilter);
+  const money = useMoneyTracker(auth.user.id,moneyFilter);
 
   const { accountView } = auth;
 
@@ -285,6 +282,8 @@ const [summaryFilter, setSummaryFilter] = useState({
     savePayment={money.savePayment}
 
     message={money.message}
+    summaryFilter={moneyFilter}
+  setSummaryFilter={setMoneyFilter}
 
 />
 
