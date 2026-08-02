@@ -43,8 +43,6 @@ function MoneyTracker({
     notes: '',
   });
 
-
-
   function resetMoneyForm() {
     setEditingMoneyId(null);
 
@@ -68,7 +66,6 @@ function MoneyTracker({
   }
 
   async function handlePaymentSave() {
-    
     if (editingPaymentId) {
       await editPayment(editingPaymentId, paymentForm);
     } else {
@@ -107,41 +104,35 @@ function MoneyTracker({
           />
 
           <MoneyPaymentList
-    payments={selectedMoney.money_payments || []}
-    onEdit={(payment) => {
-        console.log("Editing payment", payment.id);
+            payments={selectedMoney.money_payments || []}
+            onEdit={(payment) => {
+              setEditingPaymentId(payment.id);
 
-        setEditingPaymentId(payment.id);
+              setPaymentForm({
+                amount: payment.amount,
+                payment_date: payment.payment_date,
+                notes: payment.notes || '',
+              });
 
-        setPaymentForm({
-            amount: payment.amount,
-            payment_date: payment.payment_date,
-            notes: payment.notes || "",
-        });
+              setShowPaymentForm(true);
+            }}
+            onDelete={async (id) => {
+              await deletePayment(id);
 
-        setShowPaymentForm(true);
-    }}
-    onDelete={async (id) => {
-        console.log("Deleting payment", id);
-
-        await deletePayment(id);
-
-        setSelectedMoney((prev) => ({
-            ...prev,
-            money_payments: prev.money_payments.filter(
-                (payment) => payment.id !== id
-            ),
-        }));
-    }}
-/>
+              setSelectedMoney((prev) => ({
+                ...prev,
+                money_payments: prev.money_payments.filter((payment) => payment.id !== id),
+              }));
+            }}
+          />
         </>
       ) : (
         <>
           <MoneySummary
-  summary={summary}
-  summaryFilter={summaryFilter}
-  setSummaryFilter={setSummaryFilter}
-/>
+            summary={summary}
+            summaryFilter={summaryFilter}
+            setSummaryFilter={setSummaryFilter}
+          />
 
           <MoneyForm
             moneyForm={moneyForm}

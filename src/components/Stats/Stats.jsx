@@ -12,6 +12,8 @@ export default function Stats({
   categories = [],
   showUsers = false,
   showUserTotals = false,
+  selectedCategory,
+  onCategoryClick,
 }) {
   if (!summary) return null;
 
@@ -27,7 +29,12 @@ export default function Stats({
             <h3>Spending by Category</h3>
 
             {summary.byCategory.map((item, index) => (
-              <div key={item.name} className="chart-row">
+              <div
+                key={item.name}
+                className={`chart-row ${selectedCategory === item.name ? 'active' : ''}`}
+                onClick={() => onCategoryClick(item.name)}
+                style={{ cursor: 'pointer' }}
+              >
                 <span className="chart-label">{item.name}</span>
 
                 <div className="bar">

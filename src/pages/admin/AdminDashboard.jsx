@@ -20,6 +20,12 @@ import BudgetSummary from '../../components/BudgetSummary/BudgetSummary.jsx';
 
 import MoneyTracker from '../../components/MoneyTracker/MoneyTracker.jsx';
 import { useMoneyTracker } from '../../hooks/useMoneyTracker';
+import Goals from '../../components/Goals/Goal/Goals.jsx';
+
+import CashTracker from '../../components/Cash/CashTracker.jsx';
+import { useCashTracker } from '../../hooks/useCashTracker';
+
+import FinanceShell from '../../components/Finance/FinanceShell.jsx';
 
 function AdminDashboard({ auth }) {
   const {
@@ -64,28 +70,43 @@ function AdminDashboard({ auth }) {
 
   const { expenses, saveExpense, deleteExpense, loadExpenses } = useExpenses();
 
+  const [expenseFilter, setExpenseFilter] = useState({
+    category: null,
+    month: null,
+    year: null,
+  });
+
+  const filteredExpenses = expenses.filter((expense) => {
+    const date = new Date(expense.date);
+
+    return (
+      (!expenseFilter.category ||
+        expense.category_name === expenseFilter.category ||
+        expense.category?.name === expenseFilter.category) &&
+      (!expenseFilter.month || date.getMonth() + 1 === expenseFilter.month) &&
+      (!expenseFilter.year || date.getFullYear() === expenseFilter.year)
+    );
+  });
+
   const { summary, loadSummary } = useSummary();
 
-const today = new Date();
+  const cash = useCashTracker(auth.user.id);
 
-const [budgetFilter, setBudgetFilter] = useState({
-  month: today.getMonth() + 1,
-  year: today.getFullYear(),
-});
+  const today = new Date();
 
-const [moneyFilter, setMoneyFilter] = useState({
-  month: null,
-  year: null,
-});
+  const [budgetFilter, setBudgetFilter] = useState({
+    month: today.getMonth() + 1,
+    year: today.getFullYear(),
+  });
 
-const money = useMoneyTracker(
-  null,
-  moneyFilter
-);
+  const [moneyFilter, setMoneyFilter] = useState({
+    month: null,
+    year: null,
+  });
 
+  const money = useMoneyTracker(null, moneyFilter);
 
   const budget = useBudget(auth.profile);
-
 
   const { loadCategories } = useCategories();
 
@@ -131,10 +152,18 @@ const money = useMoneyTracker(
         },
 
         {
- id:'money',
- label:'Money Given/Taken'
-},
+          id: 'money',
+          label: 'Money Given/Taken',
+        },
 
+        {
+          id: 'goals',
+          label: 'Goals',
+        },
+        {
+          id: 'cash',
+          label: 'Cash Tracker',
+        },
         {
           id: 'categories',
           label: 'Categories',
@@ -143,13 +172,17 @@ const money = useMoneyTracker(
         ...(isSuperAdmin
           ? [
               {
-                id: 'users',
-                label: 'Users',
+                id: 'finance',
+                label: 'Finance',
               },
 
               {
                 id: 'budget',
                 label: 'Budget',
+              },
+              {
+                id: 'users',
+                label: 'Users',
               },
             ]
           : []),
@@ -159,6 +192,8 @@ const money = useMoneyTracker(
 
       onNavigate={setActiveAdminTab}
     >
+      {activeAdminTab === 'finance' && <FinanceShell auth={auth} />}
+
       {activeAdminTab === 'dashboard' && (
         <>
           {summary?.budget && (
@@ -183,40 +218,18 @@ const money = useMoneyTracker(
 
           <Stats
             summary={summary}
+            selectedCategory={expenseFilter.category}
+            onCategoryClick={(category) => {
+              setExpenseFilter({
+                category,
+                month: budgetFilter.month,
+                year: budgetFilter.year,
+              });
 
-            users={users}
-
-            categories={categories}
-
-            showUsers={true}
-
-            showUserTotals={true}
+              setActiveAdminTab('entries');
+            }}
           />
         </>
-      )}
-
-      {summary?.userBudgets?.length > 0 && (
-        <div className="card">
-          <h3>Assigned User Budgets</h3>
-
-          {summary.userBudgets.map((item) => (
-            <BudgetSummary
-              key={item.user_id}
-
-              title={item.name}
-
-              budget={item.budget}
-
-              expense={item.expense}
-
-              remaining={item.remaining}
-
-              percentage={item.percentage}
-
-              status={item.status}
-            />
-          ))}
-        </div>
       )}
 
       {activeAdminTab === 'entries' && (
@@ -285,6 +298,7 @@ const money = useMoneyTracker(
 
           <ExpenseList
             expenses={expenses}
+            expenseFilter={expenseFilter}
 
             onDelete={async (id) => {
               await deleteExpense(id);
@@ -311,31 +325,50 @@ const money = useMoneyTracker(
         </>
       )}
 
-{activeAdminTab === 'money' && (
+      {activeAdminTab === 'money' && (
+        <MoneyTracker
+          moneyDues={money.moneyDues}
 
-    <MoneyTracker
+          summary={money.summary}
 
-        moneyDues={money.moneyDues}
+          loadMoney={money.loadMoney}
 
-        summary={money.summary}
+          saveMoney={money.saveMoney}
 
-        loadMoney={money.loadMoney}
+          deleteMoney={money.deleteMoney}
 
-        saveMoney={money.saveMoney}
+          savePayment={money.savePayment}
+          editPayment={money.editPayment}
+          deletePayment={money.deletePayment}
+          message={money.message}
+          summaryFilter={moneyFilter}
 
-        deleteMoney={money.deleteMoney}
+          setSummaryFilter={setMoneyFilter}
+        />
+      )}
 
-        savePayment={money.savePayment}
-         editPayment={money.editPayment}
-    deletePayment={money.deletePayment}
-        message={money.message}
- summaryFilter={moneyFilter}
+      {activeAdminTab === 'goals' && <Goals auth={auth} />}
 
-    setSummaryFilter={setMoneyFilter}
-    />
+      {activeAdminTab === 'cash' && (
+        <CashTracker
+          cashLocations={cash.cashLocations}
 
-)}
+          summary={cash.summary}
 
+          saveCash={cash.saveCash}
+
+          deleteCash={cash.deleteCash}
+
+          saveTransaction={cash.saveTransaction}
+
+          editTransaction={cash.editTransaction}
+
+          deleteTransaction={cash.deleteTransaction}
+
+          message={cash.message}
+          setMessage={cash.setMessage}
+        />
+      )}
       {activeAdminTab === 'categories' && (
         <CategoryManager
           categories={categories}

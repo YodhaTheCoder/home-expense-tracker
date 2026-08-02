@@ -16,8 +16,8 @@ function ResetPassword({ onReset, message }) {
     const success = await onReset(password);
 
     if (success) {
-    window.location.replace("/");
-  }
+      window.location.replace('/');
+    }
   }
 
   return (

@@ -1,0 +1,294 @@
+```css
+.cash-summary-card {
+
+    background:white;
+
+    overflow:hidden;
+
+    border-radius:24px;
+
+    padding:7px;
+
+    box-shadow:
+    0 10px 24px rgba(0,0,0,.08);
+
+    margin-bottom:24px;
+
+}
+
+
+
+.cash-summary-top {
+
+    background:
+    linear-gradient(
+        135deg,
+        #0891b2,
+        #0f766e
+    );
+
+    padding:20px 24px 50px;
+
+    text-align:center;
+
+    color:white;
+
+    border-radius:24px 24px 0 0;
+
+}
+
+
+
+.cash-summary-top h3 {
+
+    margin:0;
+
+    font-size:20px;
+
+}
+
+
+
+.cash-summary-top span {
+
+    display:block;
+
+    margin-top:12px;
+
+    font-size:14px;
+
+    color:rgba(255,255,255,.85);
+
+}
+
+
+
+.cash-summary-top h1 {
+
+    margin:8px 0 0;
+
+    font-size:42px;
+
+    color:white;
+
+}
+
+
+
+.cash-summary-content {
+
+    background:white;
+
+    margin:-22px 0 0;
+
+    padding:22px;
+
+    border-radius:30px;
+
+    position:relative;
+
+    z-index:2;
+
+    box-shadow:
+    0 8px 25px rgba(0,0,0,.08);
+
+}
+
+
+
+.cash-summary-grid {
+
+    display:grid;
+
+    grid-template-columns:repeat(3,minmax(0,1fr));
+
+    gap:14px;
+
+}
+
+
+
+.cash-box {
+
+    border-radius:18px;
+
+    padding:14px;
+
+    border:1px solid;
+
+}
+
+
+
+.cash-box span {
+
+    display:block;
+
+    font-size:14px;
+
+    color:#64748b;
+
+}
+
+
+
+.cash-box strong {
+
+    display:block;
+
+    margin-top:8px;
+
+    font-size:24px;
+
+}
+
+
+
+.cash-total {
+
+    background:#ecfeff;
+
+    border-color:#67e8f9;
+
+}
+
+
+
+.cash-total strong {
+
+    color:#0891b2;
+
+}
+
+
+
+.cash-location {
+
+    background:#f0fdf4;
+
+    border-color:#86efac;
+
+}
+
+
+
+.cash-location strong {
+
+    color:#16a34a;
+
+}
+
+
+
+.cash-transactions {
+
+    background:#fefce8;
+
+    border-color:#fde047;
+
+}
+
+
+
+.cash-transactions strong {
+
+    color:#ca8a04;
+
+}
+
+
+
+
+.cash-progress-wrapper {
+
+    margin-top:24px;
+
+}
+
+
+
+.cash-progress {
+
+    height:10px;
+
+    background:#e5e7eb;
+
+    border-radius:10px;
+
+    overflow:hidden;
+
+}
+
+
+
+.cash-progress-bar {
+
+    height:100%;
+
+    background:#0891b2;
+
+    border-radius:10px;
+
+}
+
+
+
+.cash-progress-info {
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:10px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#0f766e;
+
+}
+
+
+
+
+@media(max-width:600px){
+
+
+.cash-summary-grid {
+
+    grid-template-columns:1fr;
+
+}
+
+
+.cash-summary-top {
+
+    padding:20px 16px 45px;
+
+}
+
+
+.cash-summary-top h1 {
+
+    font-size:36px;
+
+}
+
+
+.cash-summary-content {
+
+    padding:20px 12px;
+
+}
+
+
+.cash-box strong {
+
+    font-size:20px;
+
+}
+
+
+}
+```

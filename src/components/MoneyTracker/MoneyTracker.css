@@ -1,38 +1,27 @@
 .money-summary {
+  display: grid;
 
-display:grid;
+  grid-template-columns: repeat(3, 1fr);
 
-grid-template-columns:repeat(3,1fr);
+  gap: 15px;
 
-gap:15px;
-
-margin-bottom:20px;
-
+  margin-bottom: 20px;
 }
-
 
 .money-card {
+  background: white;
 
-background:white;
+  padding: 20px;
 
-padding:20px;
+  border-radius: 12px;
 
-border-radius:12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
-box-shadow:0 2px 8px rgba(0,0,0,.08);
-
-text-align:center;
-
+  text-align: center;
 }
 
-
-
-@media(max-width:768px){
-
-.money-summary{
-
-grid-template-columns:1fr;
-
-}
-
+@media (max-width: 768px) {
+  .money-summary {
+    grid-template-columns: 1fr;
+  }
 }

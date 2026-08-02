@@ -1,0 +1,853 @@
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.goals-container {
+  width: 100%;
+
+  padding: 16px;
+
+  padding-bottom: 90px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.goals-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 18px;
+}
+
+.goals-header h2 {
+  margin: 0;
+
+  font-size: 24px;
+
+  font-weight: 700;
+
+  color: #111827;
+}
+
+/* =========================
+   TABS
+========================= */
+
+.goals-tabs {
+  display: flex;
+
+  gap: 8px;
+
+  overflow-x: auto;
+
+  margin-bottom: 20px;
+}
+
+.goals-tabs button {
+  flex: 1;
+
+  height: 38px;
+
+  border: none;
+
+  border-radius: 20px;
+
+  background: #f1f5f9;
+
+  color: #475569;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.goals-tabs button.active {
+  background: #2563eb;
+
+  color: white;
+}
+
+/* =========================
+   PRIMARY BUTTON
+========================= */
+
+.primary-btn {
+  width: 100%;
+
+  height: 42px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #2563eb;
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  margin-bottom: 18px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.goal-card,
+.wishlist-card {
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 18px;
+
+  margin-bottom: 16px;
+
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+}
+
+.goal-card h3,
+.wishlist-card h3 {
+  margin: 0 0 8px;
+
+  font-size: 20px;
+
+  color: #111827;
+}
+
+.goal-card p,
+.wishlist-card p {
+  display: flex;
+
+  justify-content: space-between;
+
+  margin: 8px 0;
+
+  font-size: 14px;
+
+  color: #334155;
+}
+
+.goal-description {
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  margin-bottom: 14px;
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-container {
+  height: 10px;
+
+  background: #e2e8f0;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  margin: 14px 0;
+}
+
+.progress-bar {
+  height: 100%;
+
+  background: #16a34a;
+
+  border-radius: 20px;
+
+  transition: 0.3s;
+}
+
+.completed-badge {
+  background: #dcfce7;
+
+  color: #15803d !important;
+
+  padding: 8px 12px;
+
+  border-radius: 20px;
+
+  font-weight: 600;
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.goal-actions,
+.wishlist-actions {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin-top: 16px;
+}
+
+.goal-actions button,
+.wishlist-actions button {
+  flex: 1;
+
+  min-width: 85px;
+}
+
+/* =========================
+   BUTTON COLORS
+========================= */
+
+.small-btn {
+  height: 34px;
+
+  padding: 6px 12px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.add-money-btn {
+  background: #16a34a;
+
+  color: white;
+
+  border: none;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+}
+
+.edit-btn {
+  background: #dbeafe;
+
+  color: #1d4ed8;
+
+  border: none;
+}
+
+.delete-btn {
+  background: #fee2e2;
+
+  color: #dc2626;
+
+  border: none;
+}
+
+.move-btn {
+  background: #ede9fe;
+
+  color: #6d28d9;
+
+  border: none;
+}
+
+.view-btn {
+  background: #dcfce7;
+
+  color: #15803d;
+
+  border: none;
+}
+
+.archive-btn {
+  background: #fef3c7;
+
+  color: #92400e;
+
+  border: none;
+}
+
+.restore-btn {
+  background: #dbeafe;
+
+  color: #1d4ed8;
+
+  border: none;
+}
+
+.secondary-btn {
+  background: #e2e8f0;
+
+  color: #334155;
+
+  border: none;
+}
+
+.primary-action {
+  background: #2563eb;
+
+  color: white;
+}
+
+.secondary-action {
+  background: #e2e8f0;
+
+  color: #334155;
+}
+
+.danger-action {
+  background: #fee2e2;
+
+  color: #dc2626;
+}
+
+/* =========================
+   FORMS COMMON
+========================= */
+
+.goal-form,
+.wishlist-form,
+.money-form {
+  background: #f8fafc;
+
+  padding: 16px;
+
+  border-radius: 16px;
+
+  margin-top: 16px;
+}
+
+.goal-form h3,
+.wishlist-form h3,
+.money-form h3 {
+  margin-top: 0;
+
+  font-size: 18px;
+
+  color: #111827;
+}
+
+/* Inputs */
+
+.goal-form input,
+.goal-form textarea,
+.wishlist-form input,
+.wishlist-form textarea,
+.wishlist-form select,
+.money-form input,
+.money-form textarea {
+  width: 100%;
+
+  height: 40px;
+
+  padding: 8px 12px;
+
+  margin-bottom: 10px;
+
+  border-radius: 10px;
+
+  border: 1px solid #cbd5e1;
+
+  background: white;
+
+  font-size: 14px;
+
+  box-sizing: border-box;
+}
+
+.goal-form textarea,
+.wishlist-form textarea,
+.money-form textarea {
+  height: 80px;
+
+  resize: none;
+}
+
+/* =========================
+   FORM BUTTONS
+========================= */
+
+.form-actions,
+.money-actions {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.form-primary-btn,
+.form-secondary-btn {
+  width: 100%;
+
+  height: 42px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.form-primary-btn {
+  background: #2563eb;
+
+  color: white;
+}
+
+.form-secondary-btn {
+  background: #e2e8f0;
+
+  color: #334155;
+}
+
+/* =========================
+   VALIDATION ERROR
+========================= */
+
+.form-error {
+  color: #dc2626 !important;
+
+  background: #fef2f2;
+
+  padding: 8px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+
+  margin: -5px 0 12px;
+
+  font-weight: 600;
+}
+
+/* =========================
+   TRANSACTIONS
+========================= */
+
+.goal-transactions {
+  margin-top: 18px;
+
+  background: #f8fafc;
+
+  padding: 14px;
+
+  border-radius: 16px;
+}
+
+.goal-transactions h4 {
+  margin: 0 0 12px;
+
+  font-size: 17px;
+
+  color: #111827;
+}
+
+.transaction-card {
+  background: white;
+
+  border-radius: 12px;
+
+  padding: 12px;
+
+  margin-bottom: 10px;
+
+  border: 1px solid #e2e8f0;
+}
+
+.transaction-card p {
+  margin: 6px 0;
+
+  font-size: 14px;
+
+  color: #334155;
+}
+
+.transaction-card .small-btn {
+  height: 32px;
+
+  min-height: 32px;
+
+  padding: 5px 12px;
+
+  font-size: 12px;
+
+  margin-right: 8px;
+}
+
+/* =========================
+   WISHLIST FORM
+========================= */
+
+.wishlist-form select {
+  appearance: none;
+}
+
+/* =========================
+   ARCHIVE
+========================= */
+
+.archive-card {
+  background: white;
+
+  border-radius: 18px;
+
+  padding: 18px;
+
+  margin-bottom: 15px;
+
+  border: 1px solid #e2e8f0;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.archive-card h3 {
+  margin: 0 0 8px;
+
+  font-size: 18px;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-card {
+  background: #f8fafc;
+
+  border-radius: 18px;
+
+  padding: 35px 20px;
+
+  text-align: center;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+/* =========================
+   GENERAL
+========================= */
+
+button {
+  cursor: pointer;
+
+  font-family: inherit;
+}
+
+/* =========================
+   WISHLIST FORM BUTTONS
+========================= */
+
+.wishlist-form button {
+  height: 40px;
+
+  padding: 8px 16px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  margin-right: 8px;
+}
+
+/* Save */
+
+.wishlist-form button[type='submit'] {
+  background: #2563eb;
+
+  color: white;
+}
+
+/* Cancel */
+
+.wishlist-form button[type='button'] {
+  background: #e2e8f0;
+
+  color: #334155;
+}
+
+/* =========================
+   WISHLIST ACTION BUTTONS
+========================= */
+
+.wishlist-actions {
+  display: flex;
+
+  gap: 8px;
+
+  margin-top: 16px;
+}
+
+.wishlist-actions button {
+  flex: 1;
+
+  height: 34px;
+
+  min-height: 34px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+/* Edit */
+
+.secondary-action {
+  background: #e2e8f0;
+
+  color: #334155;
+
+  border: none;
+}
+
+/* Delete */
+
+.danger-action {
+  background: #fee2e2;
+
+  color: #dc2626;
+
+  border: none;
+}
+
+/* Start Saving */
+
+.primary-action {
+  background: #2563eb;
+
+  color: white;
+
+  border: none;
+}
+
+.archive-card .goal-actions button,
+.goal-card .goal-actions button {
+  height: 34px;
+
+  min-height: 34px;
+
+  padding: 6px 12px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+/* First button = Restore */
+
+.goal-actions button:first-child {
+  background: #dbeafe;
+
+  color: #1d4ed8;
+}
+
+/* Second button = Delete */
+
+.goal-actions button:last-child {
+  background: #fee2e2;
+
+  color: #dc2626;
+}
+
+.goal-transactions + .secondary-btn,
+.secondary-btn {
+  background: #e2e8f0 !important;
+
+  color: #334155 !important;
+
+  border: none;
+
+  height: 40px;
+
+  min-height: 40px;
+
+  padding: 8px 16px;
+
+  border-radius: 12px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  margin-top: 12px;
+}
+
+.secondary-btn:hover {
+  background: #cbd5e1 !important;
+}
+
+/* =========================
+   MOBILE OPTIMIZATION
+========================= */
+
+@media (max-width: 600px) {
+  .goals-container {
+    padding: 12px;
+  }
+
+  /* Tabs */
+
+  .goals-tabs button {
+    height: 36px;
+
+    font-size: 12px;
+
+    padding: 6px 12px;
+  }
+
+  /* Cards */
+
+  .goal-card,
+  .wishlist-card {
+    padding: 15px;
+
+    border-radius: 16px;
+  }
+
+  .goal-card h3,
+  .wishlist-card h3 {
+    font-size: 18px;
+  }
+
+  .goal-card p,
+  .wishlist-card p {
+    font-size: 13px;
+  }
+
+  /* Action buttons */
+
+  .goal-actions button,
+  .wishlist-actions button {
+    height: 32px;
+
+    min-height: 32px;
+
+    padding: 5px 10px;
+
+    font-size: 12px;
+  }
+
+  /* Add money */
+
+  .add-money-btn {
+    height: 32px;
+
+    min-height: 32px;
+
+    padding: 5px 10px;
+
+    font-size: 12px;
+  }
+
+  /* Forms */
+
+  .goal-form,
+  .wishlist-form,
+  .money-form {
+    padding: 14px;
+  }
+
+  .goal-form input,
+  .goal-form textarea,
+  .wishlist-form input,
+  .wishlist-form textarea,
+  .wishlist-form select,
+  .money-form input,
+  .money-form textarea {
+    height: 38px;
+
+    font-size: 14px;
+  }
+
+  .goal-form textarea,
+  .wishlist-form textarea,
+  .money-form textarea {
+    height: 75px;
+  }
+
+  /* Form buttons */
+
+  .form-primary-btn,
+  .form-secondary-btn {
+    height: 38px;
+
+    min-height: 38px;
+
+    font-size: 13px;
+  }
+
+  /* Transactions */
+
+  .transaction-card .small-btn {
+    height: 28px;
+
+    min-height: 28px;
+
+    padding: 4px 10px;
+
+    font-size: 11px;
+  }
+  .wishlist-actions button {
+    height: 32px;
+
+    min-height: 32px;
+
+    padding: 5px 8px;
+
+    font-size: 12px;
+  }
+
+  .wishlist-form button {
+    height: 36px;
+
+    font-size: 13px;
+  }
+
+  .goal-actions button {
+    height: 32px;
+
+    min-height: 32px;
+
+    padding: 5px 10px;
+
+    font-size: 12px;
+  }
+
+  .goal-actions .view-btn {
+    font-size: 11px !important;
+  }
+
+  .goal-transactions + .secondary-btn,
+  .secondary-btn {
+    height: 34px;
+
+    min-height: 34px;
+
+    padding: 6px 12px;
+
+    font-size: 12px;
+
+    border-radius: 10px;
+  }
+}

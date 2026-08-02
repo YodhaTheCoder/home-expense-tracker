@@ -167,10 +167,10 @@ export function useAuth() {
       setMessage('Password updated successfully. Please login.');
 
       await api.auth.signOut();
-      return true
+      return true;
     } catch (error) {
       setMessage(error.message);
-      return false
+      return false;
     }
   }
 

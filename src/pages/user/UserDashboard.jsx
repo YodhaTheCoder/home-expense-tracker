@@ -18,6 +18,9 @@ import { useSummary } from '../../hooks/useSummary';
 import MoneyTracker from '../../components/MoneyTracker/MoneyTracker.jsx';
 import { useMoneyTracker } from '../../hooks/useMoneyTracker';
 
+import Goals from '../../components/Goals/Goal/Goals.jsx';
+import CashTracker from '../../components/Cash/CashTracker.jsx';
+import { useCashTracker } from '../../hooks/useCashTracker';
 
 export default function UserDashboard({ auth }) {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -53,20 +56,20 @@ export default function UserDashboard({ auth }) {
   const { categories, loadCategories, addCategory, saveCategory, removeCategory } = useCategories();
 
   const { summary, loadSummary } = useSummary(auth.user.id);
-  
+
+  const cash = useCashTracker(auth.user.id);
+
   const today = new Date();
 
-const [moneyFilter, setMoneyFilter] = useState({
-  month: null,
-  year: null,
-});
+  const [moneyFilter, setMoneyFilter] = useState({
+    month: null,
+    year: null,
+  });
 
-
-  const money = useMoneyTracker(auth.user.id,moneyFilter);
+  const money = useMoneyTracker(auth.user.id, moneyFilter);
 
   const { accountView } = auth;
 
-  
   useEffect(() => {
     loadExpenses();
 
@@ -150,15 +153,24 @@ const [moneyFilter, setMoneyFilter] = useState({
           id: 'entries',
           label: 'Entries',
         },
+        {
+          id: 'goals',
+          label: 'Goals',
+        },
 
+        {
+          id: 'cash',
+          label: 'Cash Tracker',
+        },
+
+        {
+          id: 'money',
+          label: 'Money Given/Taken',
+        },
         {
           id: 'categories',
           label: 'Categories',
         },
-        {
-    id:'money',
-    label:'Money Given/Taken'
-},
       ]}
 
       activeNav={activeTab}
@@ -173,6 +185,33 @@ const [moneyFilter, setMoneyFilter] = useState({
         />
       )}
 
+      {summary?.userBudgets?.length > 0 && (
+        <div className="card">
+          <h3>Assigned User Budgets</h3>
+
+          {summary.userBudgets.map((item) => (
+            <BudgetSummary
+              key={item.user_id}
+
+              title={item.name}
+
+              budget={item.budget}
+
+              expense={item.expense}
+
+              remaining={item.remaining}
+
+              percentage={item.percentage}
+
+              status={item.status}
+
+              summaryFilter={budgetFilter}
+
+              setSummaryFilter={setBudgetFilter}
+            />
+          ))}
+        </div>
+      )}
       {activeTab === 'entries' && (
         <>
           <ExpenseForm
@@ -259,36 +298,53 @@ const [moneyFilter, setMoneyFilter] = useState({
         </>
       )}
 
- {activeTab === 'money' && (
+      {activeTab === 'money' && (
+        <MoneyTracker
+          moneyDues={money.moneyDues}
 
-    <MoneyTracker
+          summary={money.summary}
 
-    moneyDues={money.moneyDues}
+          loadMoney={money.loadMoney}
 
-    summary={money.summary}
+          saveMoney={money.saveMoney}
 
-    loadMoney={money.loadMoney}
+          deleteMoney={money.deleteMoney}
 
-    saveMoney={money.saveMoney}
+          addPayment={money.addPayment}
 
-    deleteMoney={money.deleteMoney}
+          editPayment={money.editPayment}
 
-    addPayment={money.addPayment}
+          deletePayment={money.deletePayment}
 
-     editPayment={money.editPayment}
-     
-    deletePayment={money.deletePayment}
+          savePayment={money.savePayment}
 
-    savePayment={money.savePayment}
+          message={money.message}
+          summaryFilter={moneyFilter}
+          setSummaryFilter={setMoneyFilter}
+        />
+      )}
 
-    message={money.message}
-    summaryFilter={moneyFilter}
-  setSummaryFilter={setMoneyFilter}
+      {activeTab === 'goals' && <Goals auth={auth} />}
 
-/>
+      {activeTab === 'cash' && (
+        <CashTracker
+          cashLocations={cash.cashLocations}
 
-)}
+          summary={cash.summary}
 
+          saveCash={cash.saveCash}
+
+          deleteCash={cash.deleteCash}
+
+          saveTransaction={cash.saveTransaction}
+
+          editTransaction={cash.editTransaction}
+
+          deleteTransaction={cash.deleteTransaction}
+
+          message={cash.message}
+        />
+      )}
       {activeTab === 'categories' && (
         <CategoryManager
           categories={categories}
@@ -314,8 +370,6 @@ const [moneyFilter, setMoneyFilter] = useState({
           removeCategory={removeCategory}
         />
       )}
-
-     
     </PortalShell>
   );
 }

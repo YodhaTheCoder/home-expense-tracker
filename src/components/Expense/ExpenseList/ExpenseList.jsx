@@ -1,16 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { formatCurrency } from '../../../utils/format';
 import './ExpenseList.css';
 
-function ExpenseList({ expenses, onEdit, onDelete }) {
+function ExpenseList({ expenses, expenseFilter, onEdit, onDelete }) {
   const [showFilterPanel, setShowFilterPanel] = useState(false);
 
-  const [categoryFilter, setCategoryFilter] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState(expenseFilter?.category || '');
+
   const [userFilter, setUserFilter] = useState('');
   const [dateFilter, setDateFilter] = useState('');
 
-  const [yearFilter, setYearFilter] = useState('');
-  const [monthFilter, setMonthFilter] = useState('');
+  const [yearFilter, setYearFilter] = useState(expenseFilter?.year || '');
+
+  const [monthFilter, setMonthFilter] = useState(
+    expenseFilter?.month ? String(expenseFilter.month).padStart(2, '0') : ''
+  );
 
   const categories = [...new Set(expenses.map((e) => e.category))];
 
@@ -54,6 +58,12 @@ function ExpenseList({ expenses, onEdit, onDelete }) {
       (!monthFilter || expenseMonth === monthFilter)
     );
   });
+
+  useEffect(() => {
+    setCategoryFilter(expenseFilter?.category || '');
+    setYearFilter(expenseFilter?.year || '');
+    setMonthFilter(expenseFilter?.month ? String(expenseFilter.month).padStart(2, '0') : '');
+  }, [expenseFilter]);
 
   const clearFilters = () => {
     setCategoryFilter('');
