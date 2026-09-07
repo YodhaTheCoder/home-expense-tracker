@@ -160,6 +160,8 @@ export async function updateChit(id, payload) {
 
       start_date: payload.start_date,
 
+      status: payload.status,
+
       description: payload.description,
     })
 

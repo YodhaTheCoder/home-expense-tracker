@@ -36,6 +36,8 @@ export function useFinanceChits(userId) {
 
         due_date: chitForm.due_date,
 
+        status: chitForm.status,
+
         description: chitForm.description,
       };
 

@@ -27,6 +27,8 @@ export default function ChitForm({
 
     due_date: '',
 
+    status: 'active',
+
     description: '',
   });
 
@@ -46,6 +48,8 @@ export default function ChitForm({
         start_date: editingChit.start_date,
 
         due_date: editingChit.due_date,
+
+         status: editingChit.status || 'active',
 
         description: editingChit.description || '',
       });
@@ -83,6 +87,8 @@ export default function ChitForm({
       start_date: '',
 
       due_date: '',
+
+      status: 'active',
 
       description: '',
     });
@@ -202,6 +208,20 @@ export default function ChitForm({
           </div>
 
           <div className="finance-field">
+            <label>Status</label>
+
+            <select
+              name="status"
+              value={form.status}
+              onChange={handleChange}
+            >
+              <option value="active">Active</option>
+              <option value="taken">Taken</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+
+          <div className="finance-field">
             <label>Description</label>
 
             <input
@@ -248,6 +268,8 @@ export default function ChitForm({
                     start_date: '',
 
                     due_date: '',
+
+                    status: 'active',
 
                     description: '',
                   });
